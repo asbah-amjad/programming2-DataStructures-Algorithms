@@ -9,7 +9,7 @@ int main()
     cout << "From how many integer numbers you want to count the mean value? ";
     cin >> num;
     if(num <= 0){
-        cout << "Cannot count mean value from x numbers";
+        cout << "Cannot count mean value from 0 numbers";
     }
     else{
     for(int i=1; i<=num; i++){
