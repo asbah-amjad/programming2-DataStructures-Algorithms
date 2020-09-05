@@ -9,10 +9,10 @@ int main(){
       cin >> num;
       int result = pow(num, 3);
       unsigned int cuberoot = cbrt(result);
-      if(result > 0 && cuberoot==num){
-      cout << "The cube of " << num << " is " << result;
+      if(result >= 0 && cuberoot==num){
+      cout << "The cube of " << num << " is " << result << ".";
       }
       else{
-      cout << "Error! The cube of " << num << "is not " << result;
+      cout << "Error! The cube of " << num << "is not " << result << ".";
       }
 }
