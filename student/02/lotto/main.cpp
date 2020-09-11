@@ -21,7 +21,7 @@ int main()
               else{
                   long int result= combinations(lottery_balls,drawn_balls);
 
-                  cout <<"The probability of guessing all " << drawn_balls <<" balls correctly is " << result;
+                  cout <<"The probability of guessing all " << drawn_balls <<" balls correctly is " << "1/" <<result;
               }
    }
    else{
