@@ -14,7 +14,7 @@ bool checkPangram(string str)
     int index;
 
     // Traverse all characters
-    for (int i = 0; i < str.length(); i++) {
+    for (unsigned int i = 0; i < str.length(); i++) {
 
         // If lowercase character, subtract 'a'
         // to find index.
@@ -62,7 +62,7 @@ int main(){
 
     }
 */
-    for(int i=0; i<len;i++){
+    for(unsigned int i=0; i<len;i++){
         char_array[i] = key[i];
         if(!islower(char_array[i])){
             cout << "Error! The encryption key must contain only lower case characters.";
@@ -81,7 +81,7 @@ int main(){
     string::size_type l=0;
     l = encrypt.length();
 
-    for(int i=0; i<l; i++){
+    for(unsigned int i=0; i<l; i++){
         char_array[i] = encrypt[i];
         if(!islower(char_array[i])){
             cout << "Error! The encryption key must contain only lower case characters.";
