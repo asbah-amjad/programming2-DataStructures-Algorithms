@@ -38,6 +38,21 @@ bool checkPangram(string str)
     return (true);
 }
 
+void encryption(string k, string s){
+
+    string::size_type l1=0;
+    l1 = k.length();
+
+    for(unsigned int i=0; i<l1; i++){
+        char letter = 'a';
+        if(letter<='z'){
+        replace(s.begin(),s.end(),letter,k[i]);
+        }
+        ++letter;
+    }
+
+    cout << "Encrypted text: " << s;
+}
 int main(){
 
     string key = "";
@@ -52,16 +67,7 @@ int main(){
         cout << "Error! The encryption key must contain 26 characters.";
         return EXIT_FAILURE;
     }
-/*
-    for(int i=0; i<len;i++){
-        int ascii= int(key[i]);
-        if(!(ascii>=97 && ascii<=122)){
-            cout << "Error! The encryption key must contain all alphabets a-z.";
-            return EXIT_FAILURE;
-        }
 
-    }
-*/
     for(unsigned int i=0; i<len;i++){
         char_array[i] = key[i];
         if(!islower(char_array[i])){
@@ -88,5 +94,7 @@ int main(){
             return EXIT_FAILURE;
         }
     }
+
+    encryption(key,encrypt);
 
 }
