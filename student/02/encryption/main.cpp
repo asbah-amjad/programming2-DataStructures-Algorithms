@@ -44,11 +44,8 @@ void encryption(string k, string s){
     l1 = k.length();
 
     for(unsigned int i=0; i<l1; i++){
-        char letter = 'a';
-        if(letter<='z'){
-        replace(s.begin(),s.end(),letter,k[i]);
-        }
-        ++letter;
+
+            replace(s.begin(),s.end(),char(97+i),k[i]);
     }
 
     cout << "Encrypted text: " << s;
