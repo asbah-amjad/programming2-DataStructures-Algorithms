@@ -13,7 +13,7 @@ void produce_random_numbers(unsigned int lower, unsigned int upper)
         cout << "Enter a seed value or an empty line: ";
         string seed_value = "";
         getline(cin, seed_value);
-        //cout << endl;
+        cout << endl;
 
         if( seed_value == "" ) {
             // If the user did not give a seed value, use computer time as the seed value.
@@ -26,9 +26,9 @@ void produce_random_numbers(unsigned int lower, unsigned int upper)
         uniform_int_distribution<int> distribution(lower,upper);
 
         cout << "Your drawn random number is " << distribution(rand_gen) << endl;
-        cout << "Press enter to continue or q to quit:";
+        cout << "Press enter to continue or q to quit: ";
         getline(cin,quit);
-        //cout << endl;
+        cout << endl;
         }
 
 }
