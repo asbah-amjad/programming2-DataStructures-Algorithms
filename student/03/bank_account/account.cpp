@@ -36,7 +36,7 @@ void Account::take_money(int amount){
     }
 }
 
-void Account::transfer_to(Account a, int amount){
+void Account::transfer_to(Account &a, int amount){
     if(!has_credit_){
       if(amount <= balance_){
     balance_ -= amount;
