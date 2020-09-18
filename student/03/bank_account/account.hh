@@ -2,7 +2,7 @@
 #define ACCOUNT_HH
 
 #include<string>
-
+using namespace std;
 class Account
 {
 public:
@@ -33,6 +33,7 @@ private:
     string iban_;
     int balance_;
     bool has_credit_;
+    int credit_limit_;
 };
 
 #endif // ACCOUNT_HH
