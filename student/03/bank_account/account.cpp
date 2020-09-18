@@ -37,7 +37,7 @@ void Account::take_money(int amount){
 }
 
 void Account::transfer_to(Account &a, int amount){
-    if(!has_credit_){
+    if(has_credit_ == false){
       if(amount <= balance_){
     balance_ -= amount;
     a.balance_ += amount;
@@ -50,9 +50,11 @@ void Account::transfer_to(Account &a, int amount){
     }
     else{
         int credit = balance_ + credit_limit_;
-        int remaining = credit - amount;
+
         if(amount <= credit){
-            cout << amount << " euros taken: new balance of " << iban_ << " is -" << remaining <<" euros" << endl;
+            balance_ -= amount;
+            a.balance_ += amount;
+            cout << amount << " euros taken: new balance of " << iban_ << " is " << balance_ <<" euros" << endl;
         }
         else{
             cout << "Cannot take money: credit limit overflow" << endl;
