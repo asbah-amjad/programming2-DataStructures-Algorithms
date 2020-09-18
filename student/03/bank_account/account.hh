@@ -29,11 +29,11 @@ private:
     static int running_number_;
 
     // More attributes/methods
-    string owner_;
-    string iban_;
-    int balance_;
-    bool has_credit_;
-    int credit_limit_;
+    string owner_ ="";
+    string iban_="";
+    int balance_=0;
+    bool has_credit_=false;
+    int credit_limit_=0;
 };
 
 #endif // ACCOUNT_HH
