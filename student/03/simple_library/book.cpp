@@ -42,6 +42,6 @@ void Book::renew(){
     }
 }
 void Book::give_back(){
-
+       has_loaned=false;
 }
 
