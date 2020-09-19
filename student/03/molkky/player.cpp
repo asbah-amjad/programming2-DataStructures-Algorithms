@@ -1,5 +1,8 @@
 #include "player.hh"
+#include <iostream>
+#include <string>
 
+using namespace std;
 Player::Player(string name):
     name_(name)
 {
@@ -15,6 +18,10 @@ int Player::get_points(){
 
 int Player::add_points(int pts){
     points_ += pts;
+    if(points_ >50){
+        points_ = 25;
+        cout << name_ << " gets penalty points!" << endl;
+    }
     return points_;
 }
 
