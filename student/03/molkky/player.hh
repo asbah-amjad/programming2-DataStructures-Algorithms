@@ -13,8 +13,8 @@ public:
     bool has_won();
     int add_points(int pts);
 private:
-    string name_;
-    int points_;
+    string name_ = "";
+    int points_ = 0;
 };
 
 #endif // PLAYER_HH
