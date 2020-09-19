@@ -26,6 +26,7 @@ void Book::print() const{
 
 void Book::loan(Date& a){
     if(has_loaned == false){
+        has_loaned = true;
         loan_date = a;
         a.advance(28);
         due_date = a;

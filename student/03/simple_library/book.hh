@@ -19,7 +19,7 @@ public:
 private:
     string author_ = "";
     string title_ = "";
-    bool has_loaned = false;
+    bool has_loaned=false;
     Date loan_date;
     Date due_date;
 
