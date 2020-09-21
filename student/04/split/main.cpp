@@ -14,7 +14,9 @@ std::vector< std::string > split(std::string line, char seperator,bool empty=fal
         while(std::getline(ss, item, seperator)){
             result.push_back(item);
         }
-        //std::cout << result.size() << std::endl;
+        if (line[line.length()-1] == seperator){
+            result.push_back("");
+        }
     }else{
         while(std::getline(ss, item, seperator)){
             if(item.length() > 0){
@@ -22,7 +24,7 @@ std::vector< std::string > split(std::string line, char seperator,bool empty=fal
             }
         }
     }
-
+    //std::cout << result.size() << std::endl;
 
     return result;
 }
