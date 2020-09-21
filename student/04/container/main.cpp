@@ -37,10 +37,11 @@ bool is_ordered_non_strict_ascending(std::vector<int>& ints){
 bool is_arithmetic_series(std::vector<int>& ints){
 
     std::vector<int>::size_type length = ints.size();
-    int result[length];
-    std::adjacent_difference(ints.begin(),ints.end(),result);
-    for(unsigned int i=0; i<length-1; i++){
-        if(result[i] != result[i+1]){
+    //int result[length];
+    //std::adjacent_difference(ints.begin(),ints.end(),result);
+    int d = ints[1] - ints[0];
+    for(unsigned int i=2; i<length; i++){
+        if(ints[i]-ints[i-1] != d){
             return false;
         }
     }
