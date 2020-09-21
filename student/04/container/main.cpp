@@ -50,6 +50,8 @@ bool is_arithmetic_series(std::vector<int>& ints){
 bool is_geometric_series(std::vector<int>& ints){
 
     std::vector<int>::size_type length = ints.size();
+    if(ints[0]==0 && ints[1]==0)
+        return false;
     int ratio = ints[1]/(ints[0]);
     for(unsigned int i=1; i<length; i++){
         if( (ints[i]/(ints[i-1])) != ratio )
