@@ -7,13 +7,13 @@
 // TODO: Implement split function here
 // Do not change main function
 std::vector< std::string > split(std::string line, char seperator,bool empty=false){
-/*
+
     if(empty == true){
-        //line.erase(remove(line.begin(),line.end(), ' '), line.end());
-        for(int i=0;i<line.length();i++)
-            if(line[i] == ' ') line[i]='\b';
+       line.erase(remove(line.begin(),line.end(), ' '), line.end());
+       /* for(int i=0;i<line.length();i++)
+            if(line[i] == ' ') line[i]='\b';*/
     }
- */
+
     std::vector< std::string > result;
     std::stringstream ss(line);
     std::string item;
