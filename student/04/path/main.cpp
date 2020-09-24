@@ -105,36 +105,40 @@ int main()
         { 3, 2, 3, 3},
         { 0, 0, 0, 0}
 };
+    Point p1,p2;
+
     print(grid);
 
     //user will give two points with x & y coordinates
-    Point p1,p2;
+
     cout << INPUT_TEXT;
     cin >> p1.x >> p1.y >> p2.x >> p2.y;
-
     //integer values of x & y coordinates
     int i= stoi(p1.x);
     int j= stoi(p1.y);
     int i1= stoi(p2.x);
     int j1= stoi(p2.y);
 
-
     //The given points must consist of numbers
     if((stoi_with_check(p1.x)==0) || (stoi_with_check(p1.y)==0) || (stoi_with_check(p2.x)==0) || (stoi_with_check(p2.y)==0)){
         cout << INVALID_POINT;
     }
     //The given points must be inside the game board.
-    if((i>5) || (j>4) || (i1>5) || (j1>4)){
+    // x should not be greater than 4 and x should not be greater than 5.
+    else if((i>4) || (j>5) || (i1>4) || (j1>5)){
         cout << INVALID_POINT;
     }
     //The start point must have a button. Green button=1 and Red button=0
-    if((grid.at(i-1).at(j-1)!=1) && (grid.at(i-1).at(j-1)!=0)){
+    else if((grid.at(j-1).at(i-1)!=1) && (grid.at(j-1).at(i-1)!=0)){
         cout << INVALID_POINT;
     }
 
     //The destination point must empty. Empty value is 2.
-    if(grid.at(i1-1).at(j1-1)!=2){
+    else if(grid.at(j1-1).at(i1-1)!=2){
         cout << INVALID_POINT;
+    }
+    else{
+        cout << "valid";
     }
 
     return 0;
