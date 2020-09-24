@@ -25,6 +25,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -38,8 +39,13 @@ const string CANNOT_MOVE = "There is no path between start point and destination
 const string GAME_OVER = "Game over. Congratulations!";
 const string MOVES_MADE = " move(s) made.";
 
+//Point structure with x & y coordinates
+struct Point{
+    string x="";
+    string y="";
+};
 // Prints the grid
-void print(const vector<vector<int> >& g) /*vector of vectors or a compatible type*/
+void print(const vector<vector<int>>& g) /*vector of vectors or a compatible type*/
 {
     cout << "===============" << endl;
     cout << "|   | 1 2 3 4 |" << endl;
@@ -91,7 +97,7 @@ unsigned int stoi_with_check(const string& str)
 int main()
 {
     // More code
-    // initializing grid vector
+    // initializing grid vector according to enum values
     vector<vector<int>> grid {
         { 1, 1, 1, 1},
         { 3, 2, 3, 3},
@@ -99,7 +105,37 @@ int main()
         { 3, 2, 3, 3},
         { 0, 0, 0, 0}
 };
-
     print(grid);
+
+    //user will give two points with x & y coordinates
+    Point p1,p2;
+    cout << INPUT_TEXT;
+    cin >> p1.x >> p1.y >> p2.x >> p2.y;
+
+    //integer values of x & y coordinates
+    int i= stoi(p1.x);
+    int j= stoi(p1.y);
+    int i1= stoi(p2.x);
+    int j1= stoi(p2.y);
+
+
+    //The given points must consist of numbers
+    if((stoi_with_check(p1.x)==0) || (stoi_with_check(p1.y)==0) || (stoi_with_check(p2.x)==0) || (stoi_with_check(p2.y)==0)){
+        cout << INVALID_POINT;
+    }
+    //The given points must be inside the game board.
+    if((i>5) || (j>4) || (i1>5) || (j1>4)){
+        cout << INVALID_POINT;
+    }
+    //The start point must have a button. Green button=1 and Red button=0
+    if((grid.at(i-1).at(j-1)!=1) && (grid.at(i-1).at(j-1)!=0)){
+        cout << INVALID_POINT;
+    }
+
+    //The destination point must empty. Empty value is 2.
+    if(grid.at(i1-1).at(j1-1)!=2){
+        cout << INVALID_POINT;
+    }
+
     return 0;
 }
