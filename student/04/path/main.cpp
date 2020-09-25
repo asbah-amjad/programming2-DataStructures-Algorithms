@@ -99,20 +99,20 @@ int main()
     // More code
     // initializing grid vector according to enum values
     vector<vector<int>> grid {
-        { 1, 1, 1, 1},
-        { 3, 2, 3, 3},
-        { 3, 2, 2, 3},
-        { 3, 2, 3, 3},
-        { 0, 0, 0, 0}
+        { GREEN, GREEN, GREEN, GREEN},
+        { UNUSED, EMPTY, UNUSED, UNUSED},
+        { UNUSED, EMPTY, EMPTY, UNUSED},
+        { UNUSED, EMPTY, UNUSED, UNUSED},
+        { RED, RED, RED, RED}
 };
     Point p1,p2;
+    string command = " ";
 
     print(grid);
-
+    while(command != "q"){
     //user will give two points with x & y coordinates
-
     cout << INPUT_TEXT;
-    cin >> p1.x >> p1.y >> p2.x >> p2.y;
+    cin >> p1.x>> p1.y >> p2.x >> p2.y;
     //integer values of x & y coordinates
     int i= stoi(p1.x);
     int j= stoi(p1.y);
@@ -128,18 +128,18 @@ int main()
     else if((i>4) || (j>5) || (i1>4) || (j1>5)){
         cout << INVALID_POINT;
     }
-    //The start point must have a button. Green button=1 and Red button=0
-    else if((grid.at(j-1).at(i-1)!=1) && (grid.at(j-1).at(i-1)!=0)){
+    //The start point must have a button.
+    else if((grid.at(j-1).at(i-1)!=GREEN) && (grid.at(j-1).at(i-1)!=RED)){
         cout << INVALID_POINT;
     }
 
-    //The destination point must empty. Empty value is 2.
-    else if(grid.at(j1-1).at(i1-1)!=2){
+    //The destination point must empty.
+    else if(grid.at(j1-1).at(i1-1)!=EMPTY){
         cout << INVALID_POINT;
     }
     else{
         cout << "valid";
     }
-
+   }
     return 0;
 }
