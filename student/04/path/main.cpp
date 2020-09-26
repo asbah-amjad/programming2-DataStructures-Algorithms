@@ -44,6 +44,9 @@ struct Point{
     string x="";
     string y="";
 };
+//To count moves
+    int moves = 0;
+
 // Prints the grid
 void print(const vector<vector<int>>& g) /*vector of vectors or a compatible type*/
 {
@@ -93,7 +96,89 @@ unsigned int stoi_with_check(const string& str)
 }
 
 // More functions
+void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
 
+    //pure horizontal path, source and target lies on same row
+    if(j==j1){
+        if(i1>i){
+            for(int k=i;k<i1-1;k++){
+                if(grid[j-1][k]!=EMPTY)
+                     cout << CANNOT_MOVE << endl;
+                else{
+                    cout << "move" << endl;
+                    moves++;
+                }
+
+          }
+        }
+        else{
+            for(int k=i1;k<i-1;k++){
+                if(grid[j-1][k]!=EMPTY)
+                     cout << CANNOT_MOVE << endl;
+                else{
+                    cout << "move" << endl;
+                    moves++;
+                }
+        }
+    }
+  }
+    //source and target do not lie on same row
+    if(j!=j1){
+        if(i==2){
+            if(j==1){
+                if(grid[j][i-1]==EMPTY && grid[j+1][i-1]==EMPTY){
+                    //reached cross point
+                }
+                else{
+                    cout << CANNOT_MOVE << endl;
+                }
+            }
+            if(j==5){
+                if(grid[j-2][i-1]==EMPTY && grid[j-3][i-1]==EMPTY){
+                    //reached cross point
+                }
+                else{
+                    cout << CANNOT_MOVE << endl;
+                }
+            }
+        }
+        if(i<2){
+            //horizontal right move check check
+            if(grid[j-1][i]==EMPTY){
+                   //rest
+            }
+            else{
+                cout << CANNOT_MOVE << endl;
+            }
+        }
+        if(i>2){
+            //horizontal left move check
+            if(i==4){
+                if(grid[j-1][i-2] == EMPTY && grid[j-1][i-3] == EMPTY){
+                        //rest
+                }
+                else{
+                    cout << CANNOT_MOVE << endl;
+                }
+            }
+            if(i==3){
+                if(grid[j-1][i-2]==EMPTY){
+                    //rest
+                }
+                else{
+                    cout << CANNOT_MOVE << endl;
+                }
+            }
+        }
+    }
+   // source and target lie on straight path of check point
+    if(i==2 && i1==2 && grid[i-1][i-1]==EMPTY && grid[i][i-1]==EMPTY && grid[i+1][i-1]==EMPTY){
+        cout << "move" << endl;
+        moves++;
+    }
+
+
+}
 int main()
 {
     // More code
@@ -105,12 +190,13 @@ int main()
         { UNUSED, EMPTY, UNUSED, UNUSED},
         { RED, RED, RED, RED}
 };
+    //user will give two points with x & y coordinates
     Point p1,p2;
-  //  string command = " ";
 
     print(grid);
+
     while(true){
-    //user will give two points with x & y coordinates
+
     cout << INPUT_TEXT;
     cin >> p1.x;
 
@@ -144,7 +230,8 @@ int main()
         cout << INVALID_POINT<< endl;
     }
     else{
-        cout << "valid";
+        cout << "valid" << endl;
+        pathFinder(i,j,i1,j1,grid);
     }
    }
     return 0;
