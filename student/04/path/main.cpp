@@ -96,12 +96,16 @@ unsigned int stoi_with_check(const string& str)
 }
 
 // More functions
+
+//function for printing grid after point movement
 void gridUpdate(int i, int j, int i1, int j1, vector<vector<int>>& grid){
 
     grid[j1-1][i1-1]=grid[j-1][i-1]; //assigning source value to target
     grid[j-1][i-1]=EMPTY; //assigning empty calue to source
     print(grid);
 }
+
+//function to find clear path from cross point to target point
 void fromCrossPoint_to_Target(int i, int j,int i1, int j1, vector<vector<int>>& grid){
     //source point can reach cross point, path is clear. Now, we have to move to reach destination point row j1.
     //destination row could be in same row of cross point or in different row. j1 could be 3, less or greater
@@ -191,8 +195,10 @@ void fromCrossPoint_to_Target(int i, int j,int i1, int j1, vector<vector<int>>& 
     }
 
 }
-void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
 
+//function to find path from starting point to target point
+void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
+/*
     //pure horizontal path, source and target lies on same row
     if(j==j1){
         if(i1>i){
@@ -217,6 +223,7 @@ void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
         }
     }
   }
+  */
     //source and target do not lie on same row
     if(j!=j1){
         //for both 1 and 3 path is same to reach cross point
@@ -319,26 +326,28 @@ int main()
 
     cout << INPUT_TEXT;
     cin >> p1.x;
-
+//exiting the program after pressing 'q'
     if(p1.x == "q"){
-        cout << moves << " " << MOVES_MADE << endl;
+        cout << moves << MOVES_MADE << endl;
         return EXIT_SUCCESS;
     }
 
     cin >> p1.y >> p2.x >> p2.y;
-    //integer values of x & y coordinates
-    int i= stoi(p1.x);
-    int j= stoi(p1.y);
-    int i1= stoi(p2.x);
-    int j1= stoi(p2.y);
+
 
     //The given points must consist of numbers
     if((stoi_with_check(p1.x)==0) || (stoi_with_check(p1.y)==0) || (stoi_with_check(p2.x)==0) || (stoi_with_check(p2.y)==0)){
         cout << INVALID_POINT << endl;
+        continue;
     }
+    //integer values of x & y coordinates
+        int i= stoi(p1.x);
+        int j= stoi(p1.y);
+        int i1= stoi(p2.x);
+        int j1= stoi(p2.y);
     //The given points must be inside the game board.
-    // x should not be greater than 4 and x should not be greater than 5.
-    else if((i>4) || (j>5) || (i1>4) || (j1>5)){
+    // x should not be greater than 4 and y should not be greater than 5.
+    if((i>4) || (j>5) || (i1>4) || (j1>5)){
         cout << INVALID_POINT<< endl;
     }
     //The start point must have a button.
@@ -346,7 +355,7 @@ int main()
         cout << INVALID_POINT<< endl;
     }
 
-    //The destination point must empty.
+    //The destination point must be empty.
     else if(grid.at(j1-1).at(i1-1)!=EMPTY){
         cout << INVALID_POINT<< endl;
     }
