@@ -96,11 +96,18 @@ unsigned int stoi_with_check(const string& str)
 }
 
 // More functions
-void fromCrossPoint_to_Target(int i1, int j1, vector<vector<int>>& grid){
+void gridUpdate(int i, int j, int i1, int j1, vector<vector<int>>& grid){
+
+    grid[j1-1][i1-1]=grid[j-1][i-1]; //assigning source value to target
+    grid[j-1][i-1]=EMPTY; //assigning empty calue to source
+    print(grid);
+}
+void fromCrossPoint_to_Target(int i, int j,int i1, int j1, vector<vector<int>>& grid){
     //source point can reach cross point, path is clear. Now, we have to move to reach destination point row j1.
     //destination row could be in same row of cross point or in different row. j1 could be 3, less or greater
     if(j1==3){
         if(i1==1 || i1==2){
+            gridUpdate(i,j,i1,j1,grid);
             moves++; //print the grid
         }
         else{
@@ -109,21 +116,25 @@ void fromCrossPoint_to_Target(int i1, int j1, vector<vector<int>>& grid){
     }
     if(j1 < 3){
            if(j1==2){
+               gridUpdate(i,j,i1,j1,grid);
                moves++; //print the grid
            }
            if(j1==1){
                if(grid[1][1]==EMPTY){
                   //reached destination row, now horizontal move
                      if(i1==2){
+                         gridUpdate(i,j,i1,j1,grid);
                          moves++; //print the grid
                      }
                      if(i1!=2){
                          if(grid[0][1]==EMPTY){
                              if(i1==1 || i1==3){
+                                 gridUpdate(i,j,i1,j1,grid);
                                  moves++; //print the grid
                              }
                              if(i1==4){
                                  if(grid[0][2]==EMPTY){
+                                     gridUpdate(i,j,i1,j1,grid);
                                      moves++; //print the grid
                                  }
                                  else{
@@ -143,20 +154,24 @@ void fromCrossPoint_to_Target(int i1, int j1, vector<vector<int>>& grid){
     }
     if(j1>3){
         if(j1==4){
+            gridUpdate(i,j,i1,j1,grid);
             moves++; //print the grid
         }
         if(j1==5){
             if(grid[3][1]==EMPTY){
                 if(i1==2){
+                    gridUpdate(i,j,i1,j1,grid);
                     moves++; //print the grid
                 }
                 if(i1!=2){
                     if(grid[4][1]==EMPTY){
                         if(i1==1 || i1==3){
+                            gridUpdate(i,j,i1,j1,grid);
                             moves++; //print the grid
                         }
                         if(i1==4){
                             if(grid[4][2]==EMPTY){
+                                gridUpdate(i,j,i1,j1,grid);
                                 moves++; //print the grid
                             }
                             else{
@@ -211,7 +226,7 @@ void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
                            if(j==1){
                                if(grid[1][1]==EMPTY && grid[2][1]==EMPTY){
                                    //reached cross point
-                                   fromCrossPoint_to_Target(i1,j1,grid);
+                                   fromCrossPoint_to_Target(i,j,i1,j1,grid);
                                }
                                else{
                                    cout << CANNOT_MOVE << endl;
@@ -220,7 +235,7 @@ void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
                            if(j==5){
                                if(grid[3][1]==EMPTY && grid[2][1]==EMPTY){
                                    //reached cross point
-                                   fromCrossPoint_to_Target(i1,j1,grid);
+                                   fromCrossPoint_to_Target(i,j,i1,j1,grid);
                                }
                                else{
                                    cout << CANNOT_MOVE << endl;
@@ -235,7 +250,7 @@ void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
                     if(j==1){
                         if(grid[j][i-1]==EMPTY && grid[j+1][i-1]==EMPTY){
                             //reached cross point
-                            fromCrossPoint_to_Target(i1,j1,grid);
+                            fromCrossPoint_to_Target(i,j,i1,j1,grid);
                         }
                         else{
                             cout << CANNOT_MOVE << endl;
@@ -244,7 +259,7 @@ void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
                     if(j==5){
                         if(grid[j-2][i-1]==EMPTY && grid[j-3][i-1]==EMPTY){
                             //reached cross point
-                            fromCrossPoint_to_Target(i1,j1,grid);
+                            fromCrossPoint_to_Target(i,j,i1,j1,grid);
                         }
                         else{
                             cout << CANNOT_MOVE << endl;
@@ -259,7 +274,7 @@ void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
                     if(j==1){
                         if(grid[1][1]==EMPTY && grid[2][1]==EMPTY){
                             //reached cross point
-                            fromCrossPoint_to_Target(i1,j1,grid);
+                            fromCrossPoint_to_Target(i,j,i1,j1,grid);
                         }
                         else{
                             cout << CANNOT_MOVE << endl;
@@ -268,7 +283,7 @@ void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
                     if(j==5){
                         if(grid[3][1]==EMPTY && grid[2][1]==EMPTY){
                             //reached cross point
-                            fromCrossPoint_to_Target(i1,j1,grid);
+                            fromCrossPoint_to_Target(i,j,i1,j1,grid);
                         }
                         else{
                             cout << CANNOT_MOVE << endl;
@@ -306,7 +321,8 @@ int main()
     cin >> p1.x;
 
     if(p1.x == "q"){
-    break;
+        cout << moves << " " << MOVES_MADE << endl;
+        return EXIT_SUCCESS;
     }
 
     cin >> p1.y >> p2.x >> p2.y;
@@ -335,7 +351,7 @@ int main()
         cout << INVALID_POINT<< endl;
     }
     else{
-        cout << "valid" << endl;
+
         pathFinder(i,j,i1,j1,grid);
     }
    }
