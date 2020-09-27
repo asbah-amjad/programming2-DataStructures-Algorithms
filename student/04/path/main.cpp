@@ -103,11 +103,7 @@ void gridUpdate(int i, int j, int i1, int j1, vector<vector<int>>& grid){
     grid[j1-1][i1-1]=grid[j-1][i-1]; //assigning source value to target
     grid[j-1][i-1]=EMPTY; //assigning empty calue to source
     print(grid);
-    if((grid[0][0]=grid[0][1]=grid[0][2]=grid[0][3]=RED) && (grid[4][0]=grid[4][1]=grid[4][2]=grid[4][3]=GREEN)){
-        cout << GAME_OVER << endl;
-        cout << moves << MOVES_MADE << endl;
 
-    }
 }
 
 //function to find clear path from cross point to target point
