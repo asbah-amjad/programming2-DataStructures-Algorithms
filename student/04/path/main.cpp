@@ -110,7 +110,7 @@ void fromCrossPoint_to_Target(int i, int j,int i1, int j1, vector<vector<int>>& 
     //source point can reach cross point, path is clear. Now, we have to move to reach destination point row j1.
     //destination row could be in same row of cross point or in different row. j1 could be 3, less or greater
     if(j1==3){
-        if(i1==1 || i1==2){
+        if(i1==2 || i1==3){
             gridUpdate(i,j,i1,j1,grid);
             moves++; //print the grid
         }
@@ -255,7 +255,7 @@ void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
                 }
                 if(i==2){
                     if(j==1){
-                        if(grid[j][i-1]==EMPTY && grid[j+1][i-1]==EMPTY){
+                        if(grid[1][1]==EMPTY && grid[2][1]==EMPTY){
                             //reached cross point
                             fromCrossPoint_to_Target(i,j,i1,j1,grid);
                         }
@@ -264,7 +264,7 @@ void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
                         }
                     }
                     if(j==5){
-                        if(grid[j-2][i-1]==EMPTY && grid[j-3][i-1]==EMPTY){
+                        if(grid[3][1]==EMPTY && grid[2][1]==EMPTY){
                             //reached cross point
                             fromCrossPoint_to_Target(i,j,i1,j1,grid);
                         }
