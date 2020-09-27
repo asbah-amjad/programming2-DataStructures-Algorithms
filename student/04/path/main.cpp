@@ -239,6 +239,10 @@ void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
                                    cout << CANNOT_MOVE << endl;
                                }
                            }
+                           if(j==3){
+                               //already at cross point
+                               fromCrossPoint_to_Target(i,j,i1,j1,grid);
+                           }
                            if(j==5){
                                if(grid[3][1]==EMPTY && grid[2][1]==EMPTY){
                                    //reached cross point
@@ -262,6 +266,19 @@ void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
                         else{
                             cout << CANNOT_MOVE << endl;
                         }
+                    }
+                    if(j==2 || j==4){
+                        if(grid[2][1]==EMPTY){
+                            //reached cross point
+                            fromCrossPoint_to_Target(i,j,i1,j1,grid);
+                        }
+                        else{
+                            cout << CANNOT_MOVE << endl;
+                        }
+                    }
+                    if(j==3){
+                        //already at cross point
+                        fromCrossPoint_to_Target(i,j,i1,j1,grid);
                     }
                     if(j==5){
                         if(grid[3][1]==EMPTY && grid[2][1]==EMPTY){
