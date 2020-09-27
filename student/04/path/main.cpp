@@ -124,6 +124,31 @@ void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
   }
     //source and target do not lie on same row
     if(j!=j1){
+           //for both 1 and 3 path is same to reach cross point
+        if(i==1 || i==3){
+            //horizontal right move check check
+            if(grid[j-1][1]==EMPTY){
+                   if(j==1){
+                       if(grid[1][1]==EMPTY && grid[2][1]==EMPTY){
+                           //reached cross point
+                       }
+                       else{
+                           cout << CANNOT_MOVE << endl;
+                       }
+                   }
+                   if(j==5){
+                       if(grid[3][1]==EMPTY && grid[2][1]==EMPTY){
+                           //reached cross point
+                       }
+                       else{
+                           cout << CANNOT_MOVE << endl;
+                       }
+                   }
+            }
+            else{
+                cout << CANNOT_MOVE << endl;
+            }
+        }
         if(i==2){
             if(j==1){
                 if(grid[j][i-1]==EMPTY && grid[j+1][i-1]==EMPTY){
@@ -142,34 +167,56 @@ void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
                 }
             }
         }
-        if(i<2){
-            //horizontal right move check check
-            if(grid[j-1][i]==EMPTY){
-                   //rest
+        /*
+        if(i==3){
+            if(grid[j-1][1]==EMPTY){
+                if(j==1){
+                    if(grid[1][1]==EMPTY && grid[2][1]==EMPTY){
+                        //reached cross point
+                    }
+                    else{
+                        cout << CANNOT_MOVE << endl;
+                    }
+                }
+                if(j==5){
+                    if(grid[3][1]==EMPTY && grid[2][1]==EMPTY){
+                        //reached cross point
+                    }
+                    else{
+                        cout << CANNOT_MOVE << endl;
+                    }
+                }
             }
             else{
                 cout << CANNOT_MOVE << endl;
             }
-        }
-        if(i>2){
+        }*/
             //horizontal left move check
             if(i==4){
-                if(grid[j-1][i-2] == EMPTY && grid[j-1][i-3] == EMPTY){
-                        //rest
+                if(grid[j-1][2] == EMPTY && grid[j-1][1] == EMPTY){
+                    if(j==1){
+                        if(grid[1][1]==EMPTY && grid[2][1]==EMPTY){
+                            //reached cross point
+                        }
+                        else{
+                            cout << CANNOT_MOVE << endl;
+                        }
+                    }
+                    if(j==5){
+                        if(grid[3][1]==EMPTY && grid[2][1]==EMPTY){
+                            //reached cross point
+                        }
+                        else{
+                            cout << CANNOT_MOVE << endl;
+                        }
+                    }
                 }
                 else{
                     cout << CANNOT_MOVE << endl;
                 }
             }
-            if(i==3){
-                if(grid[j-1][i-2]==EMPTY){
-                    //rest
-                }
-                else{
-                    cout << CANNOT_MOVE << endl;
-                }
-            }
-        }
+
+
     }
    // source and target lie on straight path of check point
     if(i==2 && i1==2 && grid[i-1][i-1]==EMPTY && grid[i][i-1]==EMPTY && grid[i+1][i-1]==EMPTY){
