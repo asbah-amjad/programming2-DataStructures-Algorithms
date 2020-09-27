@@ -198,32 +198,89 @@ void fromCrossPoint_to_Target(int i, int j,int i1, int j1, vector<vector<int>>& 
 
 //function to find path from starting point to target point
 void pathFinder(int i, int j, int i1, int j1, vector<vector<int>>& grid){
-/*
+
     //pure horizontal path, source and target lies on same row
     if(j==j1){
-        if(i1>i){
-            for(int k=i;k<i1-1;k++){
-                if(grid[j-1][k]!=EMPTY)
-                     cout << CANNOT_MOVE << endl;
-                else{
-                    cout << "move" << endl;
+        if(i==1){
+            if(i1==2){
+                gridUpdate(i,j,i1,j1,grid);
+                moves++;
+            }
+            if(i1==3){
+                if(grid[j-1][1]==EMPTY){
+                    gridUpdate(i,j,i1,j1,grid);
                     moves++;
                 }
-
-          }
-        }
-        else{
-            for(int k=i1;k<i-1;k++){
-                if(grid[j-1][k]!=EMPTY)
-                     cout << CANNOT_MOVE << endl;
                 else{
-                    cout << "move" << endl;
+                    cout << CANNOT_MOVE << endl;
+                }
+            }
+            if(i1==4){
+                if(grid[j-1][1]==EMPTY && grid[j-1][2]==EMPTY){
+                    gridUpdate(i,j,i1,j1,grid);
                     moves++;
                 }
+                else{
+                    cout << CANNOT_MOVE << endl;
+                }
+            }
         }
-    }
+        if(i==2){
+            if(i1==1 || i1==3){
+                gridUpdate(i,j,i1,j1,grid);
+                moves++;
+            }
+            if(i1==4){
+                if(grid[j-1][2]==EMPTY){
+                    gridUpdate(i,j,i1,j1,grid);
+                    moves++;
+                }
+                else{
+                    cout << CANNOT_MOVE << endl;
+                }
+            }
+        }
+        if(i==3){
+            if(i1==2 || i1==4){
+                gridUpdate(i,j,i1,j1,grid);
+                moves++;
+            }
+            if(i1==1){
+                if(grid[j-1][1]==EMPTY){
+                    gridUpdate(i,j,i1,j1,grid);
+                    moves++;
+                }
+                else{
+                    cout << CANNOT_MOVE << endl;
+                }
+            }
+        }
+        if(i==4){
+            if(i1==3){
+                gridUpdate(i,j,i1,j1,grid);
+                moves++;
+            }
+            if(i1==2){
+                if(grid[j-1][2]==EMPTY){
+                    gridUpdate(i,j,i1,j1,grid);
+                    moves++;
+                }
+                else{
+                    cout << CANNOT_MOVE << endl;
+                }
+            }
+            if(i1==1){
+                if(grid[j-1][2]==EMPTY && grid[j-1][1]==EMPTY){
+                    gridUpdate(i,j,i1,j1,grid);
+                    moves++;
+                }
+                else{
+                    cout << CANNOT_MOVE << endl;
+                }
+            }
+        }
   }
-  */
+
     //source and target do not lie on same row
     if(j!=j1){
         //for both 1 and 3 path is same to reach cross point
