@@ -96,7 +96,14 @@ unsigned int stoi_with_check(const string& str)
 }
 
 // More functions
+//function to check end situation
+bool hasWon(vector<vector<int>>& grid){
 
+   if((grid[0][0]=grid[0][1]=grid[0][2]=grid[0][3]=RED) && (grid[4][0]=grid[4][1]=grid[4][2]=grid[4][3]=GREEN))
+    return true;
+   else
+    return false;
+}
 //function for printing grid after point movement
 void gridUpdate(int i, int j, int i1, int j1, vector<vector<int>>& grid){
 
@@ -399,6 +406,11 @@ int main()
 
     while(true){
 
+    if(hasWon(grid)){
+        cout << GAME_OVER << endl;
+        cout << moves << MOVES_MADE << endl;
+        return EXIT_SUCCESS;
+    }
     cout << INPUT_TEXT;
     cin >> p1.x;
 //exiting the program after pressing 'q'
