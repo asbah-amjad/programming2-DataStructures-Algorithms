@@ -98,10 +98,10 @@ unsigned int stoi_with_check(const string& str)
 // More functions
 //function to check end situation
 bool hasWon(vector<vector<int>>& grid){
-
-   if((grid[0][0]=grid[0][1]=grid[0][2]=grid[0][3]=RED) && (grid[4][0]=grid[4][1]=grid[4][2]=grid[4][3]=GREEN))
-    return true;
-   else
+    if(grid[0][0]==RED && grid[0][1]==RED && grid[0][2]==RED && grid[0][3]==RED){
+        if(grid[4][0]==GREEN && grid[4][1]==GREEN && grid[4][2]==GREEN && grid[4][3]==GREEN)
+            return true;
+    }
     return false;
 }
 //function for printing grid after point movement
