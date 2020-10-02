@@ -16,8 +16,8 @@ int main(){
     ofstream output(outputFile);
     ifstream file_object(inputFile);
     if(file_object){
-        cout << "Input file: a.input" << endl;
-        cout << "Output file: a.output" << endl;
+        cout << "Input file: " << inputFile << endl;
+        cout << "Output file: " << outputFile << endl;
 
         string line;
         while(getline(file_object, line)){
@@ -27,9 +27,9 @@ int main(){
         file_object.close();
     }
     else{    
-        cout << "Input file: not_a_file.input" << endl;
-        cout << "Output file: a.output" << endl;
-        cout << "Error! The file not_a_file.input cannot be opened." << endl;
+        cout << "Input file: " << inputFile << endl;
+        cout << "Output file: " << outputFile << endl;
+        cout << "Error! The file " << inputFile <<" cannot be opened." << endl;
         return EXIT_FAILURE;
 
     }
