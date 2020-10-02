@@ -7,7 +7,7 @@ using namespace std;
 int main(){
     string inputFile = "";
     string outputFile = "";
-
+    int i=1;
     cout << "Input file name: ";
     getline(cin,inputFile);
     cout << "Output file name: ";
@@ -20,8 +20,10 @@ int main(){
         cout << "Output file: " << outputFile << endl;
 
         string line;
-        while(getline(file_object, line)){
-            output << line;
+        while(getline(file_object, line, '\n')){
+
+            output << i << " " << line << endl;
+            i++;
         }
         output.close();
         file_object.close();
