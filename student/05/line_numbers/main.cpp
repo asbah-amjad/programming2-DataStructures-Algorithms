@@ -8,15 +8,15 @@ int main(){
     string inputFile = "";
     string outputFile = "";
     int i=1;
-    cout << "Input file name: ";
+    cout << "Input file: ";
     getline(cin,inputFile);
-    cout << "Output file name: ";
+    cout << "Output file: ";
     getline(cin,outputFile);
 
     ofstream output(outputFile);
     ifstream file_object(inputFile);
     if(file_object){
-        cout << "Input file: " << inputFile << endl;
+        cout << "Input file: " << inputFile <<endl;
         cout << "Output file: " << outputFile << endl;
 
         string line;
