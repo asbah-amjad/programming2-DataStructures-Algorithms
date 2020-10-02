@@ -8,9 +8,9 @@ int main(){
     string inputFile = "";
     string outputFile = "";
     int i=1;
-    cout << "Input file: ";
+   // cout << "Input file: ";
     getline(cin,inputFile);
-    cout << "Output file: ";
+  //  cout << "Output file: ";
     getline(cin,outputFile);
 
     ofstream output(outputFile);
