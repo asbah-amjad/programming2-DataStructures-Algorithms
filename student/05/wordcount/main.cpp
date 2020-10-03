@@ -8,7 +8,7 @@
 using namespace std;
 
 int main(){
-    int line_number=0;
+    int line_number=1;
     int word_count = 0;
     map<string, string> words;
     string inputFile = "";
@@ -21,7 +21,7 @@ int main(){
         string line = "";
 
         while(getline(file_object, line, '\n')){
-            line_number = 1;
+
             vector<string> p;
             string temp;
             stringstream ss(line);
@@ -35,17 +35,19 @@ int main(){
             for(auto it=begin(p); it!=end(p); ++it){
 
                 if(words.find(*it)==words.end()){
-                    words.insert({*it,to_string(line_number)});
                     word_count = 1;
+                    words.insert({*it,to_string(line_number)});
+
                 }
                 else{
+                    ++word_count;
                     string add = ", "+to_string(line_number);
                     words.at(*it) += add;
-                    word_count++;
+
                 }
             }
 
-            line_number++;
+            ++line_number;
         }
 
         for(auto result : words){
