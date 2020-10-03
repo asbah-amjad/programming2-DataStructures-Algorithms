@@ -40,10 +40,10 @@ int main(){
 
                 }
                 else{
-                    ++word_count;
+
                     string add = ", "+to_string(line_number);
                     words.at(*it) += add;
-
+                    word_count++;
                 }
             }
 
