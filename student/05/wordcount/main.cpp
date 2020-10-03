@@ -9,7 +9,7 @@ using namespace std;
 
 int main(){
     int line_number=1;
-    int word_count = 0;
+
     map<string, string> words;
     string inputFile = "";
     cout << "Input file: ";
@@ -35,7 +35,7 @@ int main(){
             for(auto it=begin(p); it!=end(p); ++it){
 
                 if(words.find(*it)==words.end()){
-                    word_count = 1;
+
                     words.insert({*it,to_string(line_number)});
 
                 }
@@ -43,7 +43,7 @@ int main(){
 
                     string add = ", "+to_string(line_number);
                     words.at(*it) += add;
-                    word_count++;
+
                 }
             }
 
@@ -51,7 +51,14 @@ int main(){
         }
 
         for(auto result : words){
-            cout << result.first << " " << word_count<< ": " << result.second << endl;
+            string r = result.second;
+            stringstream count(r);
+            vector<string> test;
+            string t;
+            while(getline(count, t, ',')){
+                test.push_back(t);
+            }
+            cout << result.first << " " << test.size()<< ": " << result.second << endl;
         }
         file_object.close();
         return EXIT_SUCCESS;
