@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <bits/stdc++.h>
+
 
 const std::string HELP_TEXT = "S = store id1 i2\nP = print id\n"
                               "C = count id\nD = depth id\n";
@@ -34,8 +34,8 @@ std::vector<std::string> split(const std::string& s, const char delimiter, bool 
 int main()
 {
     // TODO: Implement the datastructure here
-
     using Market = std::map<std::string, std::vector<std::string>>;
+
     Market network;
 
     while(true){
@@ -59,7 +59,7 @@ int main()
             Market::iterator iter = network.find(id1);
             //person is added as a recruiter or not
             if(iter == network.end()){
-                network.insert(id1, {id2});
+                network.insert({id1, {id2}});
             }
             else{
                 network.at(id1).push_back(id2);
