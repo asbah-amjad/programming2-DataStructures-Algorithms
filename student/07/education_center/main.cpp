@@ -26,6 +26,7 @@
 #include <sstream>
 #include <vector>
 #include <map>
+#include <utility>
 
 using namespace std;
 
@@ -39,20 +40,19 @@ struct course {
     string name;
     string theme;
     int enrollments;
-}c;
+}info;
 
-map<string,course> education_center;
-
-void print_struct(struct course a){
-    cout << a.theme << " " << a.name << " " << a.enrollments << endl;
-}
+using education_center = map<pair<string, pair<string, string>>, int>;
 
 int main()
 {
     string input_file = "";
     string line = "";
     string word = "";
+    string location = "";
+    string command = "";
     vector<string> row;
+    education_center edu;
 
     cout << "Input file: ";
     getline(cin, input_file);
@@ -71,8 +71,8 @@ int main()
                     return EXIT_FAILURE;
                 }
                 else{
+                    //pushing words in a vector
                     row.push_back(word);
-
                 }
             }
             if(row.size() < 4){
@@ -80,20 +80,32 @@ int main()
                 return EXIT_FAILURE;
             }
             else{
-                c.theme = row[1];
-                c.name = row[2];
-                if(row[3] == "full"){
+                location = row[0];
+                //storing course information from vector into struct
+                info.theme = row[1];
+                info.name = row[2];
+                if(row[3]=="full"){
                     row[3] = 50;
                 }
-                c.enrollments = stoi(row[3]);
-                education_center.insert({row[0], c});
+                info.enrollments = stoi(row[3]);
+                //education_center.insert(make_pair(location, make_pair(info.theme, info.name)), info.enrollments);
+                edu.insert({{location, {info.theme, info.name}}, {info.enrollments}});
                 row.clear();
             }
         }
-        for(auto& data: education_center){
-            cout << data.first << endl;
-            print_struct(data.second);
+        /*
+        cout << "> ";
+        getline(cin, command);
+
+        if(command == "quit"){
+            return EXIT_SUCCESS;
+        }*/
+        for(auto& data: edu){
+            cout << data.first.first << " ";
+            cout << data.first.second.first << " " << data.first.second.second << " ";
+            cout << data.second << endl;
         }
+
         file_object.close();
     }
     else{
