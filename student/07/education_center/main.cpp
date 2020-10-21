@@ -27,6 +27,7 @@
 #include <vector>
 #include <map>
 #include <utility>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -47,10 +48,8 @@ using education_center = map<pair<string, pair<string, string>>, int>;
 int main()
 {
     string input_file = "";
-    string line = "";
-    string word = "";
+    string line = "", word = "";
     string location = "";
-    string command = "";
     vector<string> row;
     education_center edu;
 
@@ -88,18 +87,35 @@ int main()
                     row[3] = 50;
                 }
                 info.enrollments = stoi(row[3]);
-                //education_center.insert(make_pair(location, make_pair(info.theme, info.name)), info.enrollments);
+                // inserting data into map
                 edu.insert({{location, {info.theme, info.name}}, {info.enrollments}});
                 row.clear();
             }
         }
-        /*
+        while(true){
+
         cout << "> ";
+        string command = "";
         getline(cin, command);
 
         if(command == "quit"){
             return EXIT_SUCCESS;
-        }*/
+        }
+        else if(command == "locations"){
+            vector<string> loc;
+
+            for(auto& location : edu){
+                if(find(loc.begin(), loc.end(), location.first.first) == loc.end()){
+                    loc.push_back(location.first.first);
+                }
+            }
+            for(auto& data : loc){
+                cout << data << endl;
+            }
+        }
+
+        }
+
         for(auto& data: edu){
             cout << data.first.first << " ";
             cout << data.first.second.first << " " << data.first.second.second << " ";
