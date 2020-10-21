@@ -43,8 +43,8 @@ struct course {
 
 map<string,course> education_center;
 
-void print_struct(struct course){
-    cout << c.theme << " " << c.name << " " << c.enrollments << endl;
+void print_struct(struct course a){
+    cout << a.theme << " " << a.name << " " << a.enrollments << endl;
 }
 
 int main()
@@ -87,7 +87,7 @@ int main()
                 }
                 c.enrollments = stoi(row[3]);
                 education_center.insert({row[0], c});
-
+                row.clear();
             }
         }
         for(auto& data: education_center){
