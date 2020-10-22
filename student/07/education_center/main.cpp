@@ -110,6 +110,7 @@ int main()
         if(command == "quit"){
             return EXIT_SUCCESS;
         }
+
         else if(command == "locations"){
             vector<string> loc;
 
@@ -120,6 +121,16 @@ int main()
             }
             for(auto& data : loc){
                 cout << data << endl;
+            }
+        }
+
+        else if(command == "available"){
+            for(auto& free_courses : edu){
+                if(free_courses.second < 50){
+                    cout << free_courses.first.first << " : ";
+                    cout << free_courses.first.second.first << " : ";
+                    cout << free_courses.first.second.second << endl;
+                }
             }
         }
 
