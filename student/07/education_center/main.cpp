@@ -179,31 +179,32 @@ int main()
 
         else if(param.at(0) == "favorite_theme"){
             map<string, int> fav_theme;
-            int sum = 0, max=0;
-            string theme = "";
+            int max=0;
+            vector<string> t;
 
             for(auto& fav : edu){
 
                 map<string, int>::iterator it = fav_theme.find(fav.first.second.first);
                 if(it == fav_theme.end()){
                     fav_theme.insert({fav.first.second.first, fav.second});
-                    sum = fav.second;
                 }
                 else{
-                    sum += fav.second;
-                    it->second = sum;
-
+                    it->second = (it->second + fav.second);
                 }
             }
-
-            for(auto& it: fav_theme){
+            //finding max enrollments
+            for(auto& it : fav_theme){
               if(it.second > max){
-                  theme = it.first;
                   max = it.second;
               }
             }
             cout << max << " enrollments in themes" << endl;
-            cout << "--- " << theme << endl;
+
+            for(auto& theme : fav_theme){
+                if(theme.second == max){
+                    cout << "--- " << theme.first << endl;
+                }
+            }
         }
 
         else if(param.at(0) == "available"){
