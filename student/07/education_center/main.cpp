@@ -79,19 +79,28 @@ int main()
                 return EXIT_FAILURE;
             }
             else{
-                location = row[0];
+                location = row.at(0);
                 //storing course information from vector into struct
-                info.theme = row[1];
-                info.name = row[2];
-                if(row[3]=="full"){
-                    row[3] = 50;
+                info.theme = row.at(1);
+                info.name = row.at(2);
+                if(row.at(3)=="full"){
+                    row.at(3) = "50";
                 }
-                info.enrollments = stoi(row[3]);
+                info.enrollments = stoi(row.at(3));
                 // inserting data into map
-                edu.insert({{location, {info.theme, info.name}}, {info.enrollments}});
+                education_center::iterator iter = edu.find({location, {info.theme, info.name}});
+                //if key doesn't exist in map, then store the data
+                if(iter == edu.end()){
+                    edu.insert({{location, {info.theme, info.name}}, {info.enrollments}});
+                }
+                //otherwise update the value
+                else{
+                    iter->second = info.enrollments;
+                }
                 row.clear();
             }
         }
+
         while(true){
 
         cout << "> ";
@@ -115,6 +124,7 @@ int main()
         }
 
         }
+
 
         for(auto& data: edu){
             cout << data.first.first << " ";
