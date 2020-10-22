@@ -32,11 +32,6 @@
 
 using namespace std;
 
-const string UNKOWN_CMND = "Error: Unknown command: ";
-const string WRONG_PARAM = "Error: error in command ";
-const string UNKOWN_LOCATION = "Error: unknown location name";
-const string UNKOWN_THEME = "Error: unknown theme";
-
 struct course {
     string name;
     string theme;
@@ -152,19 +147,32 @@ int main()
         }
 
         else if(param.at(0) == "courses_in_theme"){
-            vector<string> theme;
-
-            for(auto& c_theme : edu){
-                if(param.at(1) == c_theme.first.second.first){
-                    if(find(theme.begin(), theme.end(), c_theme.first.second.second) == theme.end()){
-                    theme.push_back(c_theme.first.second.second);
-                    }
+            //vector for storing all themes present in map
+            vector<string> param_1;
+            for(auto& p : edu){
+                if(find(param_1.begin(), param_1.end(), p.first.second.first) == param_1.end()){
+                    param_1.push_back(p.first.second.first); //themes
                 }
             }
-            //alphabetical ordered vector
-            sort(theme.begin(), theme.end(), compare_fn);
-            for(auto& result : theme){
-                cout << result << endl;
+
+            if(find(param_1.begin(), param_1.end(), param.at(1)) != param_1.end()){
+                //vector for storing all course name corresponding to themes present in map
+                vector<string> theme;
+                for(auto& c_theme : edu){
+                    if(param.at(1) == c_theme.first.second.first){
+                        if(find(theme.begin(), theme.end(), c_theme.first.second.second) == theme.end()){
+                        theme.push_back(c_theme.first.second.second); //course name
+                        }
+                    }
+                }
+                //alphabetical ordered vector
+                sort(theme.begin(), theme.end(), compare_fn);
+                for(auto& result : theme){
+                    cout << result << endl;
+                }
+            }
+            else{
+                cout << "Error: unkown theme" << endl;
             }
 
         }
