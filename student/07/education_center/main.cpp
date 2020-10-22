@@ -27,11 +27,11 @@
 #include <vector>
 #include <map>
 #include <utility>
+#include <algorithm>
 #include <bits/stdc++.h>
 
 using namespace std;
 
-const string FULL = "full";
 const string UNKOWN_CMND = "Error: Unknown command: ";
 const string WRONG_PARAM = "Error: error in command ";
 const string UNKOWN_LOCATION = "Error: unknown location name";
@@ -44,6 +44,10 @@ struct course {
 }info;
 
 using education_center = map<pair<string, pair<string, string>>, int>;
+//for string comparison
+bool compare_fn(string a, string b){
+    return a<b;
+}
 
 int main()
 {
@@ -104,14 +108,20 @@ int main()
         while(true){
 
         cout << "> ";
-        string command = "";
+        vector<string> param;
+        string command = "", parameter ="";
         getline(cin, command);
 
-        if(command == "quit"){
+        stringstream cmnd(command);
+        while(getline(cmnd, parameter, ' ')){
+            param.push_back(parameter);
+        }
+
+        if(param.at(0) == "quit"){
             return EXIT_SUCCESS;
         }
 
-        else if(command == "locations"){
+        else if(param.at(0) == "locations"){
             vector<string> loc;
 
             for(auto& location : edu){
@@ -119,12 +129,77 @@ int main()
                     loc.push_back(location.first.first);
                 }
             }
+            //alphabetical ordered vector
+            sort(loc.begin(), loc.end(), compare_fn);
             for(auto& data : loc){
                 cout << data << endl;
             }
         }
 
-        else if(command == "available"){
+        else if(param.at(0) == "courses"){
+
+            for(auto& course : edu){
+                if((param.at(1) == course.first.first) && (param.at(2) == course.first.second.first)){
+                    cout << course.first.second.second << " --- ";
+                    if(course.second == 50){
+                        cout << "full" << endl;
+                    }
+                    else{
+                        cout << course.second << " enrollments" << endl;
+                    }
+                }
+            }
+        }
+
+        else if(param.at(0) == "courses_in_theme"){
+            vector<string> theme;
+
+            for(auto& c_theme : edu){
+                if(param.at(1) == c_theme.first.second.first){
+                    if(find(theme.begin(), theme.end(), c_theme.first.second.second) == theme.end()){
+                    theme.push_back(c_theme.first.second.second);
+                    }
+                }
+            }
+            //alphabetical ordered vector
+            sort(theme.begin(), theme.end(), compare_fn);
+            for(auto& result : theme){
+                cout << result << endl;
+            }
+
+        }
+
+        else if(param.at(0) == "favorite_theme"){
+            map<string, int> fav_theme;
+            int sum = 0, max=0;
+            string theme = "";
+
+            for(auto& fav : edu){
+
+                map<string, int>::iterator it = fav_theme.find(fav.first.second.first);
+                if(it == fav_theme.end()){
+                    fav_theme.insert({fav.first.second.first, fav.second});
+                    sum = fav.second;
+                }
+                else{
+                    sum += fav.second;
+                    it->second = sum;
+
+                }
+            }
+
+            for(auto& it: fav_theme){
+              if(it.second > max){
+                  theme = it.first;
+                  max = it.second;
+              }
+            }
+            cout << max << " enrollments in themes" << endl;
+            cout << "--- " << theme << endl;
+        }
+
+        else if(param.at(0) == "available"){
+
             for(auto& free_courses : edu){
                 if(free_courses.second < 50){
                     cout << free_courses.first.first << " : ";
@@ -132,6 +207,10 @@ int main()
                     cout << free_courses.first.second.second << endl;
                 }
             }
+        }
+
+        else{
+            cout << "Error: Unknown command: " << param.at(0) << endl;
         }
 
         }
