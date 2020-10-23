@@ -195,10 +195,10 @@ int main()
                 }
             }
             else if(find(locations.begin(), locations.end(), param.at(1)) == locations.end()){
-                cout << "Error: unkown location name" << endl;
+                cout << "Error: unknown location name" << endl;
             }
             else if(find(themes.begin(), themes.end(), param.at(2)) == themes.end()){
-                cout << "Error: unkown theme" << endl;
+                cout << "Error: unknown theme" << endl;
             }
             else if((find(locations.begin(), locations.end(), param.at(1)) == locations.end()) &&
                     (find(themes.begin(), themes.end(), param.at(2)) == themes.end())){
@@ -232,7 +232,7 @@ int main()
                 }
             }
             else{
-                cout << "Error: unkown theme" << endl;
+                cout << "Error: unknown theme" << endl;
             }
 
         }
