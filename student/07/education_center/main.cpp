@@ -147,15 +147,16 @@ int main()
         }
 
         else if(param.at(0) == "courses"){
+            if(param.size() < 3){
+                cout << "Error: error in command courses" << endl;
+                continue;
+            }
+
             string a = param.at(2);
             //vector for storing all locations present in map
             vector<string> locations;
             //vector for storing all themes present in map
             vector<string> themes;
-
-            if(param.size() < 3){
-                cout << "Error: error in command courses" << endl;
-            }
 
             //theme name consist of more than one word
             if(param.size() > 3){
