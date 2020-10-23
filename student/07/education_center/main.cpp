@@ -148,6 +148,14 @@ int main()
 
         else if(param.at(0) == "courses"){
             string a = param.at(2);
+            //vector for storing all locations present in map
+            vector<string> locations;
+            //vector for storing all themes present in map
+            vector<string> themes;
+
+            if(param.size() < 3){
+                cout << "Error: error in command courses" << endl;
+            }
 
             //theme name consist of more than one word
             if(param.size() > 3){
@@ -159,16 +167,41 @@ int main()
             if(a.at(0)=='\"' && a.at(a.length()-1)=='\"'){
                 param.at(2) = a.substr(1, a.length()-2);
             }
-            for(auto& course : edu){
-                if((param.at(1) == course.first.first) && (param.at(2) == course.first.second.first)){
-                    cout << course.first.second.second << " --- ";
-                    if(course.second == 50){
-                        cout << "full" << endl;
-                    }
-                    else{
-                        cout << course.second << " enrollments" << endl;
+
+            for(auto& p : edu){
+
+                if(find(locations.begin(), locations.end(), p.first.first) == locations.end()){
+                    locations.push_back(p.first.first); //locations
+                }
+
+                if(find(themes.begin(), themes.end(), p.first.second.first) == themes.end()){
+                    themes.push_back(p.first.second.first); //themes
+                }
+            }
+
+            if((find(locations.begin(), locations.end(), param.at(1)) != locations.end()) &&
+                    (find(themes.begin(), themes.end(), param.at(2)) != themes.end())){
+                for(auto& course : edu){
+                    if((param.at(1) == course.first.first) && (param.at(2) == course.first.second.first)){
+                        cout << course.first.second.second << " --- ";
+                        if(course.second == 50){
+                            cout << "full" << endl;
+                        }
+                        else{
+                            cout << course.second << " enrollments" << endl;
+                        }
                     }
                 }
+            }
+            else if(find(locations.begin(), locations.end(), param.at(1)) == locations.end()){
+                cout << "Error: unkown location name" << endl;
+            }
+            else if(find(themes.begin(), themes.end(), param.at(2)) == themes.end()){
+                cout << "Error: unkown theme" << endl;
+            }
+            else if((find(locations.begin(), locations.end(), param.at(1)) == locations.end()) &&
+                    (find(themes.begin(), themes.end(), param.at(2)) == themes.end())){
+                cout << "Error: unkown location name" << endl;
             }
         }
 
@@ -222,19 +255,19 @@ int main()
                 cout << "No enrollments" << endl;
             }
             else{
-            //finding max enrollments
-            for(auto& it : fav_theme){
-              if(it.second > max){
-                  max = it.second;
-              }
-            }
-            cout << max << " enrollments in themes" << endl;
-
-            for(auto& theme : fav_theme){
-                if(theme.second == max){
-                    cout << "--- " << theme.first << endl;
+                //finding max enrollments
+                for(auto& it : fav_theme){
+                  if(it.second > max){
+                      max = it.second;
+                  }
                 }
-            }
+                cout << max << " enrollments in themes" << endl;
+
+                for(auto& theme : fav_theme){
+                    if(theme.second == max){
+                        cout << "--- " << theme.first << endl;
+                    }
+                }
             }
         }
 
