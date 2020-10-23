@@ -44,6 +44,26 @@ bool compare_fn(string a, string b){
     return a<b;
 }
 
+std::vector<std::string> split(const std::string& s, const char delimiter, bool ignore_empty = false){
+    std::vector<std::string> result;
+    std::string tmp = s;
+
+    while(tmp.find(delimiter) != std::string::npos)
+    {
+        std::string new_part = tmp.substr(0, tmp.find(delimiter));
+        tmp = tmp.substr(tmp.find(delimiter)+1, tmp.size());
+        if(not (ignore_empty and new_part.empty()))
+        {
+            result.push_back(new_part);
+        }
+    }
+    if(not (ignore_empty and tmp.empty()))
+    {
+        result.push_back(tmp);
+    }
+    return result;
+}
+
 int main()
 {
     string input_file = "";
@@ -103,14 +123,15 @@ int main()
         while(true){
 
         cout << "> ";
-        vector<string> param;
-        string command = "", parameter ="";
+        string command = "";
         getline(cin, command);
+        vector<string> param = split(command, ' ', true);
 
+        /*
         stringstream cmnd(command);
         while(getline(cmnd, parameter, ' ')){
             param.push_back(parameter);
-        }
+        }*/
 
         if(param.at(0) == "quit"){
             return EXIT_SUCCESS;
@@ -132,7 +153,19 @@ int main()
         }
 
         else if(param.at(0) == "courses"){
-
+            string a = param.at(2);
+            int result = strcmp(&a[0], "\"");
+            //theme name consist of more than one word
+            if(param.size() > 3){
+                string t = param.at(2)+" "+param.at(3);
+                t.erase(remove(t.begin(), t.end(), '\"'), t.end());
+                param.at(2) = t;
+            }
+            if(result == 0){
+                //param.at(2).erase(remove(param.at(2).begin(), param.at(2).end(), '\"'), param.at(2).end());
+                a.erase(remove(a.begin(), a.end(), '\"'), a.end());
+                param.at(2) = a;
+            }
             for(auto& course : edu){
                 if((param.at(1) == course.first.first) && (param.at(2) == course.first.second.first)){
                     cout << course.first.second.second << " --- ";
