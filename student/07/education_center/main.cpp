@@ -218,6 +218,10 @@ int main()
                     it->second = (it->second + fav.second);
                 }
             }
+            if(fav_theme.size()==0){
+                cout << "No enrollments" << endl;
+            }
+            else{
             //finding max enrollments
             for(auto& it : fav_theme){
               if(it.second > max){
@@ -230,6 +234,7 @@ int main()
                 if(theme.second == max){
                     cout << "--- " << theme.first << endl;
                 }
+            }
             }
         }
 
