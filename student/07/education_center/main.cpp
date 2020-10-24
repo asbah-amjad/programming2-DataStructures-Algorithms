@@ -32,18 +32,21 @@
 
 using namespace std;
 
+//data structure to store data
+using education_center = map<pair<string, pair<string, string>>, int>;
+
 struct course {
     string name;
     string theme;
     int enrollments;
 }info;
 
-using education_center = map<pair<string, pair<string, string>>, int>;
 //for string comparison
 bool compare_fn(string a, string b){
     return a<b;
 }
 
+//function to split user input
 std::vector<std::string> split(const std::string& s, const char delimiter, bool ignore_empty = false){
     std::vector<std::string> result;
     std::string tmp = s;
@@ -147,6 +150,7 @@ int main()
         }
 
         else if(param.at(0) == "courses"){
+            //check for incorrect parameters with course command
             if(param.size() < 3){
                 cout << "Error: error in command courses" << endl;
                 continue;
@@ -172,14 +176,14 @@ int main()
             for(auto& p : edu){
 
                 if(find(locations.begin(), locations.end(), p.first.first) == locations.end()){
-                    locations.push_back(p.first.first); //locations
+                    locations.push_back(p.first.first);
                 }
 
                 if(find(themes.begin(), themes.end(), p.first.second.first) == themes.end()){
-                    themes.push_back(p.first.second.first); //themes
+                    themes.push_back(p.first.second.first);
                 }
             }
-
+            //for location and theme found in map
             if((find(locations.begin(), locations.end(), param.at(1)) != locations.end()) &&
                     (find(themes.begin(), themes.end(), param.at(2)) != themes.end())){
                 for(auto& course : edu){
@@ -194,12 +198,15 @@ int main()
                     }
                 }
             }
+            //for incorrect location parameter
             else if(find(locations.begin(), locations.end(), param.at(1)) == locations.end()){
                 cout << "Error: unknown location name" << endl;
             }
+            //for incorrect theme parameter
             else if(find(themes.begin(), themes.end(), param.at(2)) == themes.end()){
                 cout << "Error: unknown theme" << endl;
             }
+            //for both incorrect location and theme parameters
             else if((find(locations.begin(), locations.end(), param.at(1)) == locations.end()) &&
                     (find(themes.begin(), themes.end(), param.at(2)) == themes.end())){
                 cout << "Error: unkown location name" << endl;
@@ -211,7 +218,7 @@ int main()
             vector<string> param_1;
             for(auto& p : edu){
                 if(find(param_1.begin(), param_1.end(), p.first.second.first) == param_1.end()){
-                    param_1.push_back(p.first.second.first); //themes
+                    param_1.push_back(p.first.second.first);
                 }
             }
 
@@ -221,7 +228,7 @@ int main()
                 for(auto& c_theme : edu){
                     if(param.at(1) == c_theme.first.second.first){
                         if(find(theme.begin(), theme.end(), c_theme.first.second.second) == theme.end()){
-                        theme.push_back(c_theme.first.second.second); //course name
+                        theme.push_back(c_theme.first.second.second);
                         }
                     }
                 }
@@ -249,6 +256,7 @@ int main()
                     fav_theme.insert({fav.first.second.first, fav.second});
                 }
                 else{
+                    //updating enrollment value
                     it->second = (it->second + fav.second);
                 }
             }
@@ -287,13 +295,6 @@ int main()
             cout << "Error: Unknown command: " << param.at(0) << endl;
         }
 
-        }
-
-
-        for(auto& data: edu){
-            cout << data.first.first << " ";
-            cout << data.first.second.first << " " << data.first.second.second << " ";
-            cout << data.second << endl;
         }
 
         file_object.close();
