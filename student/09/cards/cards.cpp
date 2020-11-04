@@ -85,12 +85,27 @@ bool Cards::top_to_bottom()
 
 void Cards::print_from_top_to_bottom(ostream &s)
 {
-    s << "Hello";
+    Card_data* item = top_;
+    int num = 1;
+    while(item != nullptr){
+        s << num << ": " << item->data << endl;
+        ++num;
+        item = item->next;
+    }
 }
 
+void Cards::recursive_print(Cards::Card_data *top, ostream &s)
+{
+    int num =1;
+    if(top){
+        recursive_print(top->next, s);
+        s << num << ": " << top->data << endl;
+        ++num;
+    }
+}
 
 void Cards::print_from_bottom_to_top(ostream &s)
 {
-    s << "Hello";
+    recursive_print(top_, s);
 }
 
