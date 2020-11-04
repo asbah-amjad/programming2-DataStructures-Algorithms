@@ -97,8 +97,10 @@ void Cards::print_from_top_to_bottom(ostream &s)
 void Cards::recursive_print(Cards::Card_data *top, ostream &s)
 {
     int num =1;
-    if(top){
+    if(top != nullptr){
+
         recursive_print(top->next, s);
+
         s << num << ": " << top->data << endl;
         ++num;
     }
