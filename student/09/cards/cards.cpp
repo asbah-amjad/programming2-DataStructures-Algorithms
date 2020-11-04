@@ -86,12 +86,12 @@ bool Cards::top_to_bottom()
 
 void Cards::print_from_top_to_bottom(ostream &s)
 {
-
+    s << "Hello";
 }
 
 
 void Cards::print_from_bottom_to_top(ostream &s)
 {
-
+    s << "Hello";
 }
 
