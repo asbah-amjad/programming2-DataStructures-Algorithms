@@ -56,7 +56,7 @@ bool Cards::bottom_to_top()
         else{
         Card_data* last = top_;
         Card_data* secLast = NULL;
-        while(last != nullptr){
+        while(last->next != nullptr){
             secLast = last;
             last = last->next;
         }
@@ -80,7 +80,7 @@ bool Cards::top_to_bottom()
         else{
         Card_data* last = top_;
         Card_data* first = top_;
-        while(last != nullptr){
+        while(last->next != nullptr){
             last = last->next;
         }
         top_ = first->next;
@@ -88,7 +88,6 @@ bool Cards::top_to_bottom()
         last->next = first;
         return  true;
         }
-
 
 }
 
