@@ -71,6 +71,10 @@ void Queue::switch_light()
 
         is_green_ = false; //reset again to red
     }
+    else{
+        is_green_ = false;
+        print();
+    }
 
 }
 
