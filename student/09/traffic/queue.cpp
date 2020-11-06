@@ -66,10 +66,12 @@ void Queue::switch_light()
                     i++;
                 }
                 cout << "can go on" << endl;
+
             }
+            is_green_ = false;
         }
 
-        is_green_ = false; //reset again to red
+        //is_green_ = false; //reset again to red
     }
     else{
         is_green_ = false;
