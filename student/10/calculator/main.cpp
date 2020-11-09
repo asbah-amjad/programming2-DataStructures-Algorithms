@@ -108,6 +108,7 @@ int main() {
                         continue;
                     }
                     cout << GREETING_AT_END << endl;
+                    break;
 
                 }
                 else{
