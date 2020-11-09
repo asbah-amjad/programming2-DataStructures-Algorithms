@@ -108,8 +108,7 @@ int main() {
                         continue;
                     }
                     cout << GREETING_AT_END << endl;
-                    break;
-
+                    return EXIT_SUCCESS;
                 }
                 else{
                     if(pieces.size() != c.parameter_number+1){
@@ -118,7 +117,7 @@ int main() {
                     }
                     if(string_to_double(pieces.at(1), left) && string_to_double(pieces.at(2), right)){
                         cout << c.action(left, right) << endl;
-
+                        continue;
                     }
                     else{
                         cout << "Error: a non-number operand." << endl;
@@ -126,7 +125,7 @@ int main() {
                 }
             }
         }
-
+        //cout << "Error: unknown command." << endl;
     }
 }
 
