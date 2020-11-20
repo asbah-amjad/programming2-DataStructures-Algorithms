@@ -134,16 +134,17 @@ void Company::printColleagues(const std::string &id, std::ostream &output) const
     printNotFound(id, output);
     Employee* ptr = getPointer(id);
     Employee* bossPtr = ptr->boss_;
-    if(bossPtr->subordinates_.size() == 1){
-        output << id << " has no colleagues." << std::endl;
-    }
-    else{
+
+    if(bossPtr->subordinates_.size() > 1){
         output << id << " has " << bossPtr->subordinates_.size()-1 << " colleagues:" << std::endl;
         for(auto *p : bossPtr->subordinates_){
             if(p->id_ != id){
                 output << p->id_ << std::endl;
             }
         }
+    }
+    else{
+        output << id << " has no colleagues." << std::endl;
     }
 }
 
@@ -177,18 +178,44 @@ void Company::printLongestTimeInLineManagement(const std::string &id, std::ostre
     double time = ptr->time_in_service_;
     std::string name = id;
 
-    for(auto* p: empStruct_){
+    for(auto* p: ptr->subordinates_){
         if(p->department_ == department && p->time_in_service_ > time){
             time = p->time_in_service_;
             name = p->id_;
         }
     }
-    output << "With the time of " << time << ", " << name << " is the longest-served employee in their line management." << std::endl;
+    if(name == id){
+        output << "With the time of " << time << ", " << name <<
+                  " is the longest-served employee in their line management." << std::endl;
+    }
+    else{
+        output << "With the time of " << time << ", " << name << " is the longest-served employee in " << id <<
+                  "'s line management." << std::endl;
+    }
 }
 
 void Company::printShortestTimeInLineManagement(const std::string &id, std::ostream &output) const
 {
     printNotFound(id, output);
+    Employee* ptr = getPointer(id);
+    std::string department = ptr->department_;
+    double time = ptr->time_in_service_;
+    std::string name = id;
+
+    for(auto *p : ptr->subordinates_){
+        if(p->time_in_service_ < time){
+            time = p->time_in_service_;
+            name = p->id_;
+        }
+    }
+    if(name == id){
+        output << "With the time of " << time << ", " << name <<
+                  " is the shortest-served employee in their line management." << std::endl;
+    }
+    else{
+        output << "With the time of " << time << ", " << name << " is the shortest-served employee in " << id <<
+                  "'s line management." << std::endl;
+    }
 }
 
 void Company::printBossesN(const std::string &id, const int n, std::ostream &output) const
