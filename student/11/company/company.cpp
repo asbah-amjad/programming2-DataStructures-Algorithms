@@ -103,7 +103,7 @@ void Company::printBoss(const std::string &id, std::ostream &output) const
     Employee* bossPtr = ptr->boss_;
 
     if(bossPtr == nullptr){
-        output << id << " has no bosses" << std::endl;
+        output << id << " has no bosses." << std::endl;
     }
     else{
         output << id << " has 1 bosses:" << std::endl;
@@ -115,14 +115,16 @@ void Company::printSubordinates(const std::string &id, std::ostream &output) con
 {
     printNotFound(id, output);
     Employee* ptr = getPointer(id);
+    IdSet set;
 
     if(ptr->subordinates_.size() == 0){
         output << id << " has no subordinates." << std::endl;
     }
     else{
         output << id << " has " << ptr->subordinates_.size() << " subordinates:" << std::endl;
-        for(auto *p : ptr->subordinates_){
-            output << p->id_ << std::endl;
+        set = VectorToIdSet(ptr->subordinates_);
+        for(auto it = set.begin(); it != set.end(); ++it){
+            output << *it << std::endl;
         }
     }
 }
@@ -132,7 +134,7 @@ void Company::printColleagues(const std::string &id, std::ostream &output) const
     printNotFound(id, output);
     Employee* ptr = getPointer(id);
     Employee* bossPtr = ptr->boss_;
-    if(bossPtr->subordinates_.size() <= 1){
+    if(bossPtr->subordinates_.size() == 1){
         output << id << " has no colleagues." << std::endl;
     }
     else{
