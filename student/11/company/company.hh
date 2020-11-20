@@ -178,7 +178,7 @@ private:
 
     //STL container to store pointers for Employee-structs
     std::vector< Employee* > empStruct_;
-    //std::vector< std::shared_ptr< Employee > > empStruct_;
+
     /* The following functions are meant to make project easier.
      * You can implement them if you want and/or create your own.
      * Anyway it would be a good idea to implement more functions

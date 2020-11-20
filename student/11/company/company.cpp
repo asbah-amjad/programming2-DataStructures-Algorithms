@@ -30,13 +30,13 @@ Company::~Company()
 
 Employee *Company::getPointer(const std::string &id) const
 {
-    auto it = std::find(empStruct_.begin(), empStruct_.end(), id);
-    if(it != empStruct_.end()){
-        return empStruct_.at(it - empStruct_.begin());
+    Employee* ptr = nullptr;
+    for(auto* p: empStruct_){
+        if(p->id_ == id){
+            ptr = p;
+        }
     }
-    else{
-        return nullptr;
-    }
+    return ptr;
 }
 
 void Company::printNotFound(const std::string &id, std::ostream &output) const
@@ -45,6 +45,15 @@ void Company::printNotFound(const std::string &id, std::ostream &output) const
     if(ptr == nullptr){
         output << "Error. " << id << " not found." << std::endl;
     }
+}
+
+IdSet Company::VectorToIdSet(const std::vector<Employee *> &container) const
+{
+    IdSet s;
+    for(const auto* p : container){
+        s.insert(p->id_);
+    }
+    return s;
 }
 
 
@@ -65,13 +74,12 @@ void Company::addNewEmployee(const std::string &id, const std::string &dep, cons
     }
 }
 
-bool compareFunction(const Employee* a, const Employee* b) {return a->id_ < b->id_;}
 void Company::printEmployees(std::ostream &output) const
 {
-    std::sort(empStruct_.begin(), empStruct_.end(), compareFunction);
-
-    for(const auto* p : empStruct_){
-        output << p->id_ << " " << p->department_ << " " << p->time_in_service_ << std::endl;
+    IdSet set = VectorToIdSet(empStruct_);
+    for(auto it = set.begin(); it != set.end(); ++it){
+        Employee* ptr = getPointer(*it);
+        output << *it << ", " << ptr->department_ << ", " << ptr->time_in_service_ << std::endl;
     }
 }
 
@@ -79,10 +87,9 @@ void Company::addRelation(const std::string &subordinate, const std::string &bos
 {
     Employee* subPtr = getPointer(subordinate);
     Employee* bossPtr = getPointer(boss);
-    if(bossPtr == nullptr){
-        output << subordinate << " has no bosses" << std::endl;
-    }
+
     printNotFound(subordinate, output);
+
     if(bossPtr!=nullptr && subPtr != nullptr){
         subPtr->boss_ = bossPtr;
         bossPtr->subordinates_.push_back(subPtr);
