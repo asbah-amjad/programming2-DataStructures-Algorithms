@@ -148,11 +148,40 @@ void Company::printColleagues(const std::string &id, std::ostream &output) const
 void Company::printDepartment(const std::string &id, std::ostream &output) const
 {
     printNotFound(id, output);
+    IdSet set;
+    Employee* ptr = getPointer(id);
+    std::string department = ptr->department_;
+    for(auto* p: empStruct_){
+        if(p->department_ == department && p->id_ != id){
+            set.insert(p->id_);
+        }
+    }
+    if(set.size() != 0){
+        output << id << " has " << set.size() << " department colleagues:" << std::endl;
+        for(auto it = set.begin(); it != set.end(); ++it){
+            output << *it << std::endl;
+        }
+    }
+    else{
+        output << id << " has no department colleagues." << std::endl;
+    }
 }
 
 void Company::printLongestTimeInLineManagement(const std::string &id, std::ostream &output) const
 {
     printNotFound(id, output);
+    Employee* ptr = getPointer(id);
+    std::string department = ptr->department_;
+    double time = ptr->time_in_service_;
+    std::string name = id;
+
+    for(auto* p: empStruct_){
+        if(p->department_ == department && p->time_in_service_ > time){
+            time = p->time_in_service_;
+            name = p->id_;
+        }
+    }
+    output << "With the time of " << time << ", " << name << " is the longest-served employee in their line management." << std::endl;
 }
 
 void Company::printShortestTimeInLineManagement(const std::string &id, std::ostream &output) const
