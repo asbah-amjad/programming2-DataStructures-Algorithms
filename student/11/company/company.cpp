@@ -180,11 +180,12 @@ void Company::printDepartment(const std::string &id, std::ostream &output) const
         set.insert(bossPtr->id_);
         if(bossPtr->subordinates_.size() != 0){
             for(auto *p : bossPtr->subordinates_){
-                set.insert(p->id_);
+                if(p->department_ == department){set.insert(p->id_);}
+
 
                 if(p->subordinates_.size() != 0){
                     for(auto *s : p->subordinates_){
-                        set.insert(s->id_);
+                        if(s->department_ == department){set.insert(s->id_);}
                     }
                 }
             }
