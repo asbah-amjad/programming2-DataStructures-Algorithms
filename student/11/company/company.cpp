@@ -182,7 +182,6 @@ void Company::printDepartment(const std::string &id, std::ostream &output) const
             for(auto *p : bossPtr->subordinates_){
                 if(p->department_ == department){set.insert(p->id_);}
 
-
                 if(p->subordinates_.size() != 0){
                     for(auto *s : p->subordinates_){
                         if(s->department_ == department){set.insert(s->id_);}
@@ -262,6 +261,9 @@ void Company::printShortestTimeInLineManagement(const std::string &id, std::ostr
 void Company::printBossesN(const std::string &id, const int n, std::ostream &output) const
 {
     Employee* ptr = getPointer(id);
+    IdSet set;
+    int level = n;
+    Employee* bossPtr = ptr->boss_;
     if(ptr == nullptr){
         printNotFound(id, output);
         return;
@@ -269,18 +271,56 @@ void Company::printBossesN(const std::string &id, const int n, std::ostream &out
     if(n < 1){
         output << LEVEL_ERROR << std::endl;
     }
-
+    else{
+        while(level != 0){
+            if(bossPtr == nullptr){
+                break;
+            }
+            set.insert(bossPtr->id_);
+            bossPtr = bossPtr->boss_;
+            level--;
+        }
+    }
+    if(set.size() != 0){
+        output << id << " has " << set.size() << " bosses:" << std::endl;
+        for(auto it = set.begin(); it != set.end(); ++it){
+            output << *it << std::endl;
+        }
+    }
+    else{
+        output << id << " has no bosses." << std::endl;
+    }
 }
 
 void Company::printSubordinatesN(const std::string &id, const int n, std::ostream &output) const
 {
     Employee* ptr = getPointer(id);
+    IdSet set;
+    int level = n;
     if(ptr == nullptr){
         printNotFound(id, output);
         return;
     }
     if(n < 1){
         output << LEVEL_ERROR << std::endl;
+    }
+    else{
+        while(level != 0){
+            if(ptr->subordinates_.size() != 0){
+                set = VectorToIdSet(ptr->subordinates_);
+            }
+
+            level--;
+        }
+    }
+    if(set.size() != 0){
+        output << id << " has " << set.size() << " subordinates:" << std::endl;
+        for(auto it = set.begin(); it != set.end(); ++it){
+            output << *it << std::endl;
+        }
+    }
+    else{
+        output << id << " has no subordinates." << std::endl;
     }
 }
 
