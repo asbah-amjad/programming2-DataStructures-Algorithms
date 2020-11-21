@@ -177,16 +177,23 @@ void Company::printDepartment(const std::string &id, std::ostream &output) const
     Employee* bossPtr = ptr->boss_;
 
     while(bossPtr != nullptr && bossPtr->department_ == department){
+        set.insert(bossPtr->id_);
         if(bossPtr->subordinates_.size() != 0){
             for(auto *p : bossPtr->subordinates_){
-                if(p->id_ != id){
-                    set.insert(p->id_);                }
+                set.insert(p->id_);
+
+                if(p->subordinates_.size() != 0){
+                    for(auto *s : p->subordinates_){
+                        set.insert(s->id_);
+                    }
+                }
             }
         }
         bossPtr = bossPtr->boss_;
     }
 
     if(set.size() != 0){
+        set.erase(id);
         output << id << " has " << set.size() << " department colleagues:" << std::endl;
         for(auto it = set.begin(); it != set.end(); ++it){
             output << *it << std::endl;
