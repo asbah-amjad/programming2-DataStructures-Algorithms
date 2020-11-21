@@ -148,7 +148,10 @@ void Company::printColleagues(const std::string &id, std::ostream &output) const
         return;
     }
     Employee* bossPtr = ptr->boss_;
-
+    if(bossPtr == nullptr){
+        output << id << " has no colleagues." << std::endl;
+        return;
+    }
     if(bossPtr->subordinates_.size() > 1){
         output << id << " has " << bossPtr->subordinates_.size()-1 << " colleagues:" << std::endl;
         for(auto *p : bossPtr->subordinates_){
@@ -157,7 +160,7 @@ void Company::printColleagues(const std::string &id, std::ostream &output) const
             }
         }
     }
-    if(bossPtr->subordinates_.size() == 1){
+    else{
         output << id << " has no colleagues." << std::endl;
     }
 }
