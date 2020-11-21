@@ -17,6 +17,10 @@
 */
 #include "company.hh"
 #include <algorithm>
+#include <string>
+
+const std::string LEVEL_ERROR = "Error. Level can't be less than 1.";
+const std::string EMP_ADDED = "Error. Employee already added.";
 
 Company::Company(): empStruct_()
 {
@@ -40,11 +44,8 @@ Employee *Company::getPointer(const std::string &id) const
 }
 
 void Company::printNotFound(const std::string &id, std::ostream &output) const
-{
-    Employee* ptr = getPointer(id);
-    if(ptr == nullptr){
-        output << "Error. " << id << " not found." << std::endl;
-    }
+{  
+    output << "Error. " << id << " not found." << std::endl;
 }
 
 IdSet Company::VectorToIdSet(const std::vector<Employee *> &container) const
@@ -70,7 +71,7 @@ void Company::addNewEmployee(const std::string &id, const std::string &dep, cons
         empStruct_.push_back(newEmployee);
     }
     else{
-        output << "Error. Employee already added." << std::endl;
+        output << EMP_ADDED << std::endl;
     }
 }
 
@@ -88,7 +89,10 @@ void Company::addRelation(const std::string &subordinate, const std::string &bos
     Employee* subPtr = getPointer(subordinate);
     Employee* bossPtr = getPointer(boss);
 
-    printNotFound(subordinate, output);
+    if(subPtr == nullptr){
+        printNotFound(subordinate, output);
+        return;
+    }
 
     if(bossPtr!=nullptr && subPtr != nullptr){
         subPtr->boss_ = bossPtr;
@@ -98,8 +102,12 @@ void Company::addRelation(const std::string &subordinate, const std::string &bos
 
 void Company::printBoss(const std::string &id, std::ostream &output) const
 {
-    printNotFound(id, output);
+
     Employee* ptr = getPointer(id);
+    if(ptr == nullptr){
+        printNotFound(id, output);
+        return;
+    }
     Employee* bossPtr = ptr->boss_;
 
     if(bossPtr == nullptr){
@@ -113,8 +121,11 @@ void Company::printBoss(const std::string &id, std::ostream &output) const
 
 void Company::printSubordinates(const std::string &id, std::ostream &output) const
 {
-    printNotFound(id, output);
     Employee* ptr = getPointer(id);
+    if(ptr == nullptr){
+        printNotFound(id, output);
+        return;
+    }
     IdSet set;
 
     if(ptr->subordinates_.size() == 0){
@@ -131,8 +142,11 @@ void Company::printSubordinates(const std::string &id, std::ostream &output) con
 
 void Company::printColleagues(const std::string &id, std::ostream &output) const
 {
-    printNotFound(id, output);
     Employee* ptr = getPointer(id);
+    if(ptr == nullptr){
+        printNotFound(id, output);
+        return;
+    }
     Employee* bossPtr = ptr->boss_;
 
     if(bossPtr->subordinates_.size() > 1){
@@ -143,16 +157,19 @@ void Company::printColleagues(const std::string &id, std::ostream &output) const
             }
         }
     }
-    else{
+    if(bossPtr->subordinates_.size() == 1){
         output << id << " has no colleagues." << std::endl;
     }
 }
 
 void Company::printDepartment(const std::string &id, std::ostream &output) const
 {
-    printNotFound(id, output);
     IdSet set;
     Employee* ptr = getPointer(id);
+    if(ptr == nullptr){
+        printNotFound(id, output);
+        return;
+    }
     std::string department = ptr->department_;
     for(auto* p: empStruct_){
         if(p->department_ == department && p->id_ != id){
@@ -172,8 +189,11 @@ void Company::printDepartment(const std::string &id, std::ostream &output) const
 
 void Company::printLongestTimeInLineManagement(const std::string &id, std::ostream &output) const
 {
-    printNotFound(id, output);
     Employee* ptr = getPointer(id);
+    if(ptr == nullptr){
+        printNotFound(id, output);
+        return;
+    }
     std::string department = ptr->department_;
     double time = ptr->time_in_service_;
     std::string name = id;
@@ -196,14 +216,17 @@ void Company::printLongestTimeInLineManagement(const std::string &id, std::ostre
 
 void Company::printShortestTimeInLineManagement(const std::string &id, std::ostream &output) const
 {
-    printNotFound(id, output);
     Employee* ptr = getPointer(id);
+    if(ptr == nullptr){
+        printNotFound(id, output);
+        return;
+    }
     std::string department = ptr->department_;
     double time = ptr->time_in_service_;
     std::string name = id;
 
     for(auto *p : ptr->subordinates_){
-        if(p->time_in_service_ < time){
+        if(p->department_ == department && p->time_in_service_ < time){
             time = p->time_in_service_;
             name = p->id_;
         }
@@ -220,13 +243,26 @@ void Company::printShortestTimeInLineManagement(const std::string &id, std::ostr
 
 void Company::printBossesN(const std::string &id, const int n, std::ostream &output) const
 {
-    printNotFound(id, output);
-    output << n;
+    Employee* ptr = getPointer(id);
+    if(ptr == nullptr){
+        printNotFound(id, output);
+        return;
+    }
+    if(n < 1){
+        output << LEVEL_ERROR << std::endl;
+    }
+
 }
 
 void Company::printSubordinatesN(const std::string &id, const int n, std::ostream &output) const
 {
-    printNotFound(id, output);
-    output << n;
+    Employee* ptr = getPointer(id);
+    if(ptr == nullptr){
+        printNotFound(id, output);
+        return;
+    }
+    if(n < 1){
+        output << LEVEL_ERROR << std::endl;
+    }
 }
 
