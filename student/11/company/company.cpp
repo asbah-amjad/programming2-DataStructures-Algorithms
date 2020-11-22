@@ -21,6 +21,14 @@
 
 const std::string LEVEL_ERROR = "Error. Level can't be less than 1.";
 const std::string EMP_ADDED = "Error. Employee already added.";
+const std::string NO_BOSS = " has no bosses.";
+const std::string NO_COLLEAGUES = " has no colleagues.";
+const std::string NO_SUBORDINATES = " has no subordinates.";
+const std::string NO_DEPCOLLEAGUES = " has no department colleagues.";
+const std::string WITH_TIME = "With the time of ";
+const std::string LONGEST = " is the longest-served employee in ";
+const std::string SHORTEST = " is the shortest-served employee in ";
+const std::string LINE = " line management.";
 
 Company::Company(): empStruct_()
 {
@@ -111,7 +119,7 @@ void Company::printBoss(const std::string &id, std::ostream &output) const
     Employee* bossPtr = ptr->boss_;
 
     if(bossPtr == nullptr){
-        output << id << " has no bosses." << std::endl;
+        output << id << NO_BOSS << std::endl;
     }
     else{
         output << id << " has 1 bosses:" << std::endl;
@@ -129,7 +137,7 @@ void Company::printSubordinates(const std::string &id, std::ostream &output) con
     IdSet set;
 
     if(ptr->subordinates_.size() == 0){
-        output << id << " has no subordinates." << std::endl;
+        output << id << NO_SUBORDINATES << std::endl;
     }
     else{
         output << id << " has " << ptr->subordinates_.size() << " subordinates:" << std::endl;
@@ -149,7 +157,7 @@ void Company::printColleagues(const std::string &id, std::ostream &output) const
     }
     Employee* bossPtr = ptr->boss_;
     if(bossPtr == nullptr){
-        output << id << " has no colleagues." << std::endl;
+        output << id << NO_COLLEAGUES << std::endl;
         return;
     }
     if(bossPtr->subordinates_.size() > 1){
@@ -161,7 +169,7 @@ void Company::printColleagues(const std::string &id, std::ostream &output) const
         }
     }
     else{
-        output << id << " has no colleagues." << std::endl;
+        output << id << NO_COLLEAGUES << std::endl;
     }
 }
 
@@ -200,7 +208,7 @@ void Company::printDepartment(const std::string &id, std::ostream &output) const
         }
     }
     else{
-        output << id << " has no department colleagues." << std::endl;
+        output << id << NO_DEPCOLLEAGUES << std::endl;
     }
 }
 
@@ -222,12 +230,12 @@ void Company::printLongestTimeInLineManagement(const std::string &id, std::ostre
         }
     }
     if(name == id){
-        output << "With the time of " << time << ", " << name <<
-                  " is the longest-served employee in their line management." << std::endl;
+        output << WITH_TIME << time << ", " << name <<
+                  LONGEST << "their" << LINE << std::endl;
     }
     else{
-        output << "With the time of " << time << ", " << name << " is the longest-served employee in " << id <<
-                  "'s line management." << std::endl;
+        output << WITH_TIME << time << ", " << name << LONGEST << id <<
+                  "'s" << LINE << std::endl;
     }
 }
 
@@ -249,12 +257,12 @@ void Company::printShortestTimeInLineManagement(const std::string &id, std::ostr
         }
     }
     if(name == id){
-        output << "With the time of " << time << ", " << name <<
-                  " is the shortest-served employee in their line management." << std::endl;
+        output << WITH_TIME << time << ", " << name <<
+                  SHORTEST << "their" << LINE << std::endl;
     }
     else{
-        output << "With the time of " << time << ", " << name << " is the shortest-served employee in " << id <<
-                  "'s line management." << std::endl;
+        output << WITH_TIME << time << ", " << name << SHORTEST << id <<
+                  "'s" << LINE << std::endl;
     }
 }
 
@@ -270,6 +278,7 @@ void Company::printBossesN(const std::string &id, const int n, std::ostream &out
     }
     if(n < 1){
         output << LEVEL_ERROR << std::endl;
+        return;
     }
     else{
         while(level != 0){
@@ -288,7 +297,7 @@ void Company::printBossesN(const std::string &id, const int n, std::ostream &out
         }
     }
     else{
-        output << id << " has no bosses." << std::endl;
+        output << id << NO_BOSS << std::endl;
     }
 }
 
@@ -303,14 +312,23 @@ void Company::printSubordinatesN(const std::string &id, const int n, std::ostrea
     }
     if(n < 1){
         output << LEVEL_ERROR << std::endl;
+        return;
     }
     else{
-        while(level != 0){
+        if(ptr->subordinates_.size() != 0){
+            //subordinates
+            set = VectorToIdSet(ptr->subordinates_);
+        }
+        while(level > 1){
             if(ptr->subordinates_.size() != 0){
-                set = VectorToIdSet(ptr->subordinates_);
+                for(auto *p : ptr->subordinates_){
+
+                    //subordinates of subordinates
+                    set = VectorToIdSet(p->subordinates_);
+                }
             }
 
-            level--;
+            level --;
         }
     }
     if(set.size() != 0){
@@ -320,7 +338,7 @@ void Company::printSubordinatesN(const std::string &id, const int n, std::ostrea
         }
     }
     else{
-        output << id << " has no subordinates." << std::endl;
+        output << id << NO_SUBORDINATES << std::endl;
     }
 }
 
