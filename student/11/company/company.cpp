@@ -21,14 +21,15 @@
 
 const std::string LEVEL_ERROR = "Error. Level can't be less than 1.";
 const std::string EMP_ADDED = "Error. Employee already added.";
-const std::string NO_BOSS = " has no bosses.";
-const std::string NO_COLLEAGUES = " has no colleagues.";
-const std::string NO_SUBORDINATES = " has no subordinates.";
-const std::string NO_DEPCOLLEAGUES = " has no department colleagues.";
+const std::string HAS_NO = " has no ";
 const std::string WITH_TIME = "With the time of ";
 const std::string LONGEST = " is the longest-served employee in ";
 const std::string SHORTEST = " is the shortest-served employee in ";
 const std::string LINE = " line management.";
+const std::string SUB = "subordinates";
+const std::string BOSS = "bosses";
+const std::string COLLEAGUES = "colleagues";
+const std::string DEP_COLLEAGUES = "department colleagues";
 
 Company::Company(): empStruct_()
 {
@@ -63,6 +64,14 @@ IdSet Company::VectorToIdSet(const std::vector<Employee *> &container) const
         s.insert(p->id_);
     }
     return s;
+}
+
+void Company::printGroup(const std::string &id, const std::string &group, const IdSet &container, std::ostream &output) const
+{
+    output << id << " has " << container.size() << " " << group << ":" << std::endl;
+    for(auto it = container.begin(); it != container.end(); ++it){
+        output << *it << std::endl;
+    }
 }
 
 
@@ -119,7 +128,8 @@ void Company::printBoss(const std::string &id, std::ostream &output) const
     Employee* bossPtr = ptr->boss_;
 
     if(bossPtr == nullptr){
-        output << id << NO_BOSS << std::endl;
+        output << id << HAS_NO << BOSS << "." << std::endl;
+       // output << id << NO_BOSS << std::endl;
     }
     else{
         output << id << " has 1 bosses:" << std::endl;
@@ -137,10 +147,10 @@ void Company::printSubordinates(const std::string &id, std::ostream &output) con
     IdSet set;
 
     if(ptr->subordinates_.size() == 0){
-        output << id << NO_SUBORDINATES << std::endl;
+        output << id << HAS_NO << SUB << "." << std::endl;
     }
     else{
-        output << id << " has " << ptr->subordinates_.size() << " subordinates:" << std::endl;
+        output << id << " has " << ptr->subordinates_.size() << " " << SUB << ":" << std::endl;
         set = VectorToIdSet(ptr->subordinates_);
         for(auto it = set.begin(); it != set.end(); ++it){
             output << *it << std::endl;
@@ -157,11 +167,11 @@ void Company::printColleagues(const std::string &id, std::ostream &output) const
     }
     Employee* bossPtr = ptr->boss_;
     if(bossPtr == nullptr){
-        output << id << NO_COLLEAGUES << std::endl;
+        output << id << HAS_NO << COLLEAGUES << "." << std::endl;
         return;
     }
     if(bossPtr->subordinates_.size() > 1){
-        output << id << " has " << bossPtr->subordinates_.size()-1 << " colleagues:" << std::endl;
+        output << id << " has " << bossPtr->subordinates_.size()-1 << " " << COLLEAGUES << ":" << std::endl;
         for(auto *p : bossPtr->subordinates_){
             if(p->id_ != id){
                 output << p->id_ << std::endl;
@@ -169,7 +179,7 @@ void Company::printColleagues(const std::string &id, std::ostream &output) const
         }
     }
     else{
-        output << id << NO_COLLEAGUES << std::endl;
+        output << id << HAS_NO << COLLEAGUES << "." << std::endl;
     }
 }
 
@@ -186,10 +196,14 @@ void Company::printDepartment(const std::string &id, std::ostream &output) const
 
     while(bossPtr != nullptr && bossPtr->department_ == department){
         set.insert(bossPtr->id_);
+
         if(bossPtr->subordinates_.size() != 0){
+            //inserting boss pointer subordinates
+
             for(auto *p : bossPtr->subordinates_){
                 if(p->department_ == department){set.insert(p->id_);}
 
+                //inserting subordinates of subordinates
                 if(p->subordinates_.size() != 0){
                     for(auto *s : p->subordinates_){
                         if(s->department_ == department){set.insert(s->id_);}
@@ -197,18 +211,16 @@ void Company::printDepartment(const std::string &id, std::ostream &output) const
                 }
             }
         }
+        //going up in the hierarchy
         bossPtr = bossPtr->boss_;
     }
 
     if(set.size() != 0){
         set.erase(id);
-        output << id << " has " << set.size() << " department colleagues:" << std::endl;
-        for(auto it = set.begin(); it != set.end(); ++it){
-            output << *it << std::endl;
-        }
+        printGroup(id, DEP_COLLEAGUES, set, output);
     }
     else{
-        output << id << NO_DEPCOLLEAGUES << std::endl;
+        output << id << HAS_NO << DEP_COLLEAGUES << "." << std::endl;
     }
 }
 
@@ -293,13 +305,10 @@ void Company::printBossesN(const std::string &id, const int n, std::ostream &out
         }
     }
     if(set.size() != 0){
-        output << id << " has " << set.size() << " bosses:" << std::endl;
-        for(auto it = set.begin(); it != set.end(); ++it){
-            output << *it << std::endl;
-        }
+        printGroup(id, BOSS, set, output);
     }
     else{
-        output << id << NO_BOSS << std::endl;
+        output << id << HAS_NO << BOSS << "." << std::endl;
     }
 }
 
@@ -334,13 +343,10 @@ void Company::printSubordinatesN(const std::string &id, const int n, std::ostrea
         }
     }
     if(set.size() != 0){
-        output << id << " has " << set.size() << " subordinates:" << std::endl;
-        for(auto it = set.begin(); it != set.end(); ++it){
-            output << *it << std::endl;
-        }
+        printGroup(id, SUB, set, output);
     }
     else{
-        output << id << NO_SUBORDINATES << std::endl;
+        output << id << HAS_NO << SUB << "." << std::endl;
     }
 }
 
