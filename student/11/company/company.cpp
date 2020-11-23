@@ -143,7 +143,7 @@ void Company::printBoss(const std::string &id, std::ostream &output) const
 
     if(bossPtr == nullptr){
         output << id << HAS_NO << BOSS << "." << std::endl;
-       // output << id << NO_BOSS << std::endl;
+        // output << id << NO_BOSS << std::endl;
     }
     else{
         output << id << " has 1 bosses:" << std::endl;
@@ -272,16 +272,24 @@ void Company::printShortestTimeInLineManagement(const std::string &id, std::ostr
         printNotFound(id, output);
         return;
     }
+    IdSet set;
     std::string department = ptr->department_;
     double time = ptr->time_in_service_;
     std::string name = id;
 
-    for(auto *p : ptr->subordinates_){
-        if(p->department_ == department && p->time_in_service_ < time){
-            time = p->time_in_service_;
-            name = p->id_;
+    if(ptr->subordinates_.size() != 0){
+        //subordinates
+        set = VectorToIdSet(ptr->subordinates_);
+    }
+    subCall(set);
+    for(auto it = set.begin(); it != set.end(); ++it){
+        Employee* itPtr = getPointer(*it);
+        if(itPtr->time_in_service_ < time){
+            time = itPtr->time_in_service_;
+            name = itPtr->id_;
         }
     }
+
     if(name == id){
         output << WITH_TIME << time << ", " << name <<
                   SHORTEST << "their" << LINE << std::endl;
