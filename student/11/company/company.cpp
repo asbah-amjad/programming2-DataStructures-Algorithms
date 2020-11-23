@@ -74,6 +74,20 @@ void Company::printGroup(const std::string &id, const std::string &group, const 
     }
 }
 
+void Company::subCall(IdSet &container) const
+{
+    for(auto it = container.begin(); it != container.end(); ++it){
+        Employee* itPtr = getPointer(*it);
+
+        if(itPtr != nullptr){
+            if(itPtr->subordinates_.size() != 0){
+                for(auto* p : itPtr->subordinates_){
+                    container.insert(p->id_);
+                }
+            }
+        }
+    }
+}
 
 void Company::addNewEmployee(const std::string &id, const std::string &dep, const double &time, std::ostream &output)
 {
@@ -331,14 +345,7 @@ void Company::printSubordinatesN(const std::string &id, const int n, std::ostrea
             set = VectorToIdSet(ptr->subordinates_);
         }
         while(level > 1){
-            if(ptr->subordinates_.size() != 0){
-                for(auto *p : ptr->subordinates_){
-
-                    //subordinates of subordinates
-                    set.insert(p->id_);
-                }
-            }
-
+            subCall(set);
             level --;
         }
     }

@@ -199,6 +199,9 @@ private:
     void printGroup(const std::string& id, const std::string& group,
                     const IdSet& container, std::ostream& output) const;
 
+    //recursive function
+    void subCall(IdSet& container) const;
+
 };
 
 #endif // COMPANY_HH
