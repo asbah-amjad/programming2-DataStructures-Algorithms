@@ -269,13 +269,14 @@ void Company::printShortestTimeInLineManagement(const std::string &id, std::ostr
 void Company::printBossesN(const std::string &id, const int n, std::ostream &output) const
 {
     Employee* ptr = getPointer(id);
-    IdSet set;
-    int level = n;
-    Employee* bossPtr = ptr->boss_;
     if(ptr == nullptr){
         printNotFound(id, output);
         return;
     }
+    IdSet set;
+    int level = n;
+    Employee* bossPtr = ptr->boss_;
+
     if(n < 1){
         output << LEVEL_ERROR << std::endl;
         return;
@@ -288,6 +289,7 @@ void Company::printBossesN(const std::string &id, const int n, std::ostream &out
             set.insert(bossPtr->id_);
             bossPtr = bossPtr->boss_;
             level--;
+
         }
     }
     if(set.size() != 0){
@@ -324,7 +326,7 @@ void Company::printSubordinatesN(const std::string &id, const int n, std::ostrea
                 for(auto *p : ptr->subordinates_){
 
                     //subordinates of subordinates
-                    set = VectorToIdSet(p->subordinates_);
+                    set.insert(p->id_);
                 }
             }
 
