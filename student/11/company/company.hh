@@ -199,7 +199,7 @@ private:
     void printGroup(const std::string& id, const std::string& group,
                     const IdSet& container, std::ostream& output) const;
 
-    //recursive function
+    //function to get subordinates of subordinates
     void subCall(IdSet& container) const;
 
 };
