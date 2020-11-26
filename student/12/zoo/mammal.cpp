@@ -1,13 +1,8 @@
 #include "mammal.hh"
 
-Mammal::Mammal()
+Mammal::Mammal(): Animal("Kip kop kip kop")
 {
 
-}
-
-Mammal::Mammal(const std::string &moving_noise): Animal(moving_noise)
-{
-    Animal("Kip kop kip kop");
 }
 
 void Mammal::suckle(std::ostream &output)

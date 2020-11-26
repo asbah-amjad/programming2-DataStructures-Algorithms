@@ -6,7 +6,6 @@ class Mammal: public Animal
 {
 public:
     Mammal();
-    Mammal(const std::string& moving_noise);
     void suckle(std::ostream& output);
 };
 
