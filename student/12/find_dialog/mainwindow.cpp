@@ -43,7 +43,7 @@ void MainWindow::on_findPushButton_clicked()
             QString text = in.readAll();
 
             if(ui->matchCheckBox->isChecked()){
-                if(text.indexOf(word_, 1) == -1){
+                if(text.indexOf(word_) == -1){
                     str.append("Word not found");
                 }
                 else{
@@ -51,7 +51,8 @@ void MainWindow::on_findPushButton_clicked()
                 }
             }
             else{
-                if(text.indexOf(word_, 0) == -1){
+                Qt::CaseSensitivity cs= Qt::CaseInsensitive;
+                if(text.indexOf(word_, 0, cs) == -1){
                     str.append("Word not found");
                 }
                 else{
