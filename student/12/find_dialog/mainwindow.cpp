@@ -41,12 +41,24 @@ void MainWindow::on_findPushButton_clicked()
         else{
             QTextStream in(&file);
             QString text = in.readAll();
-            if(text.indexOf(word_) == -1){
-                str.append("Word not found");
+
+            if(ui->matchCheckBox->isChecked()){
+                if(text.indexOf(word_, 1) == -1){
+                    str.append("Word not found");
+                }
+                else{
+                    str.append("Word found");
+                }
             }
             else{
-                str.append("Word found");
+                if(text.indexOf(word_, 0) == -1){
+                    str.append("Word not found");
+                }
+                else{
+                    str.append("Word found");
+                }
             }
+
         }
     }
 
