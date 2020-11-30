@@ -8,7 +8,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::showTime);
+
+    //showTime();
 }
 
 MainWindow::~MainWindow()
@@ -22,10 +25,11 @@ void MainWindow::on_startButton_clicked()
         return;
     }
     else{
-        timer->start(6000);
+        timer->start(1000);
     }
 
     showTime();
+
 }
 
 void MainWindow::on_stopButton_clicked()
@@ -37,12 +41,16 @@ void MainWindow::on_stopButton_clicked()
 
 void MainWindow::on_resetButton_clicked()
 {
-
+    QTime time = QTime::fromString("0.0", "m.s");
+    int sec = time.second();
+    int min = time.minute();
+    ui->lcdNumberMin->display(min);
+    ui->lcdNumberSec->display(sec);
 }
 
 void MainWindow::showTime()
 {
-    QTime time = QTime::currentTime();
+    QTime time = QTime::fromString("0.6", "m.s");
     int sec = time.second();
     int min = time.minute();
     ui->lcdNumberMin->display(min);
